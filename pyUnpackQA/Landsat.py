@@ -1,6 +1,6 @@
 from collections import OrderedDict
 
-from base import Base
+from .base import Base
 
 class L8C2L2_QAPixel(Base):
     """
