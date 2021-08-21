@@ -4,13 +4,7 @@ from .tools.unpackbits import unpackbits
 
 class Base():
     """
-    Landsat 8 Collection 2 Level 2 QA Pixel unpacking.
-    
-    References doc: LSDS-1328 Version 6.0, September 2020
-    
-    Confirmed products:
-        Google Earth Engine XXXXX
-        AWS Store XXXXX
+    Generalized bit unpacking methods. 
     """
     def __init__(self):
         self.flag_info = {}
