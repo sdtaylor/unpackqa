@@ -85,8 +85,9 @@ class Base():
 
         Parameters
         ----------
-        qa : np.array
-            An array of any shape with an int-like dtype.
+        qa : np.array or int
+            An array of any shape with an int-like dtype. If a single integer 
+            it will be coverted to a numpy array with length 1. 
         flags : list of strings, optional
             List of flags to return. If 'all', the default, then all available
             flags are returned in the array. See available flags for each 
@@ -102,6 +103,12 @@ class Base():
 
         """
         flags = self._parse_flag_args(flags)
+       
+        # allow a non-array if it's a single integer. It must still pass
+        # other checks though.
+        if isinstance(qa, int):
+            qa = np.array([qa], dtype=np.int32)
+        
         self._validate_arr(qa)
         
         bits = unpackbits(qa, num_bits = self.num_bits)
@@ -124,8 +131,9 @@ class Base():
 
         Parameters
         ----------
-        qa : np.array
-            An array of any shape with an int-like dtype.
+        qa : np.array or int
+            An array of any shape with an int-like dtype. If a single integer 
+            it will be coverted to a numpy array with length 1. 
         flags : list of strings, optional
             List of flags to return. If 'all', the default, then all available
             flags are returned in the array. See available flags for each 
