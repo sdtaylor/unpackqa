@@ -27,6 +27,7 @@ class L8C2L2_QAPixel(Base):
                                       'Cirrus Confidence': [14,15]})
         
         self.num_bits = 16
+        self.max_value = 65535
         
         
 class L8C2L2_QARADSAT(Base):
@@ -65,3 +66,4 @@ class L8C2L2_QARADSAT(Base):
                                       })
         
         self.num_bits = 16
+        self.max_value = 65535

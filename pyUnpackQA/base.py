@@ -9,6 +9,7 @@ class Base():
     def __init__(self):
         self.flag_info = {}
         self.n_bits = 16
+        self.max_value = 65535
         
     def _parse_flag_args(self, passed_flags):
         if passed_flags == 'all':
@@ -18,6 +19,27 @@ class Base():
             if not all([f in valid_flags for f in passed_flags]):
                 raise ValueError('Invalid flag name passed')        
         return passed_flags
+    
+    def _validate_arr(self, arr):
+        if not isinstance(arr, np.ndarray):
+            raise TypeError('qa should be a numpy int-like array. ' + \
+                            'If a single value then wrap in np.array([qa],dtype=int)')
+        
+        if not np.issubdtype(arr.dtype, np.integer):
+            raise TypeError('qa should be an int-like array.' + \
+                            'Transform via qa.astype(np.int32)')
+        
+        if arr.max() > self.max_value:
+            m = arr.max()
+            error_message = 'qa has values larger than the specified range for this product. ' + \
+                            'max value was {} and the valid range is 0-{}'
+            raise ValueError(error_message.format(m, self.max_value))
+        
+        if arr.min() < 0:
+            m = arr.min()
+            error_message = 'qa has values smaller than the specified range for this product. ' + \
+                            'min value was {} and the valid range is 0-{}'
+            raise ValueError(error_message.format(m, self.max_value))
     
     def available_qa_flags(self):
         """
@@ -80,6 +102,7 @@ class Base():
 
         """
         flags = self._parse_flag_args(flags)
+        self._validate_arr(qa)
         
         bits = unpackbits(qa, num_bits = self.num_bits)
         # put the bit axis in front for easier indexing
