@@ -1,21 +1,22 @@
+from collections import OrderedDict
 import numpy as np
 
 from .tools.unpackbits import unpackbits
 
-class Base():
+class UnpackQABase():
     """
     Generalized bit unpacking methods. 
     """
-    def __init__(self):
-        self.flag_info = {}
-        self.n_bits = 16
-        self.max_value = 65535
+    def __init__(self, product_info):
+        self.flag_info = product_info['flag_info']
+        self.num_bits = product_info['num_bits']
+        self.max_value = product_info['max_value']
         
     def _parse_flag_args(self, passed_flags):
         if passed_flags == 'all':
-            passed_flags = self.available_qa_flags()
+            passed_flags = self._available_qa_flags()
         else:
-            valid_flags = self.available_qa_flags()
+            valid_flags = self._available_qa_flags()
             if not all([f in valid_flags for f in passed_flags]):
                 raise ValueError('Invalid flag name passed')        
         return passed_flags
@@ -23,7 +24,7 @@ class Base():
     def _validate_arr(self, arr):
         if not isinstance(arr, np.ndarray):
             raise TypeError('qa should be a numpy int-like array. ' + \
-                            'If a single value then wrap in np.array([qa],dtype=int)')
+                            'If a single value then it should be type int')
         
         if not np.issubdtype(arr.dtype, np.integer):
             raise TypeError('qa should be an int-like array.' + \
@@ -41,7 +42,7 @@ class Base():
                             'min value was {} and the valid range is 0-{}'
             raise ValueError(error_message.format(m, self.max_value))
     
-    def available_qa_flags(self):
+    def _available_qa_flags(self):
         """
         A list of available QA flags for this product. 
 
@@ -78,7 +79,7 @@ class Base():
             # When a flag is > 1 bit then pack it to it's final value
             return np.packbits(bit_array[bit_location], axis=0, bitorder='little')
     
-    def unpack_to_array(self, qa, flags='all'):
+    def _unpack_to_array(self, qa, flags='all'):
         """
         Make a mask array with the same shape as qa with an additional axis
         for all flag masks.
@@ -88,10 +89,10 @@ class Base():
         qa : np.array or int
             An array of any shape with an int-like dtype. If a single integer 
             it will be coverted to a numpy array with length 1. 
-        flags : list of strings, optional
+        flags : list of strings or 'all', optional
             List of flags to return. If 'all', the default, then all available
             flags are returned in the array. See available flags for each 
-            product with `available_qa_flags`.
+            product with `list_qa_flags()`.
 
         Returns
         -------
@@ -125,7 +126,7 @@ class Base():
         # more intuitive that way
         return np.moveaxis(mask_array, source = 0, destination = -1)
     
-    def unpack_to_dict(self, qa, flags='all'):
+    def _unpack_to_dict(self, qa, flags='all'):
         """
         Get mask arrays for the specified flags in a dictionary format.
 
@@ -134,10 +135,10 @@ class Base():
         qa : np.array or int
             An array of any shape with an int-like dtype. If a single integer 
             it will be coverted to a numpy array with length 1. 
-        flags : list of strings, optional
+        flags : list of strings or 'all', optional
             List of flags to return. If 'all', the default, then all available
             flags are returned in the array. See available flags for each 
-            product with `available_qa_flags`.
+            product with `list_qa_flags()`.
 
         Returns
         -------
@@ -148,6 +149,6 @@ class Base():
 
         """
         flags = self._parse_flag_args(flags)
-        flag_array = self.unpack_to_array(qa = qa, flags = flags)
+        flag_array = self._unpack_to_array(qa = qa, flags = flags)
         flag_array = np.moveaxis(flag_array, source =  -1, destination = 0)
         return {flag:flag_array[flag_i] for flag_i, flag in enumerate(flags)}

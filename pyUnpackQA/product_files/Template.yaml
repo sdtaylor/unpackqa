@@ -1,0 +1,90 @@
+# The format for QA band descriptions. These will be read in as python dictionaries
+# where the key is the unique product qa band identifer, with the key value
+# another dictionary describing the properites. 
+
+
+# initial key entry. This uniquely identifes the product and QA band
+# to be unpacked.
+L8C2L2_QAQA_pixel:
+  # The descrption should have the full product and QA band name. Descriptions
+  # of all flags, ideally in a markdown table. The reference documentation where
+  # Some data products have multiple QA bands, each with different flags, and
+  # those should be unique entries.  
+  # The pipe (|) symbole here indicates the "literal block style" so that all newlines
+  # in the "description" entry will be preserved. 
+  # This entry will end up in the documentation.
+  description: |
+    Landsat 8 Collection 2 Level 2 QA RADSAT unpacking.
+    aka. Radiometric Saturation and Terrain Occlusion QA
+    
+    For band saturation:
+        0 = no saturation
+        1 = saturated data
+        
+    For terrain occlusion:
+        0 = no terrain occlusion
+        1 = terrain occlusion
+    
+    References doc: LSDS-1328 Version 6.0, September 2020
+    
+    Confirmed products:
+        Google Earth Engine: LANDSAT/LC08/C02/T1_L2
+        AWS Store XXXXX
+        
+  # flag_info is a list of dictionaries. where each one has a single key:value
+  # of the flag description and a list of the bits that flag encompasses.
+  # These should be ordered from the lowest bit flag to the highest.
+  flag_info:
+  - Band 1 Data Saturation:
+    - 0
+  - Band 2 Data Saturation:
+    - 1
+  - Band 3 Data Saturation:
+    - 2
+  - Band 4 Data Saturation:
+    - 3
+  - Band 5 Data Saturation:
+    - 4
+    - 5
+
+  # max values is the maximum valid range and should be listed in the docs 
+  # somewhere. This will be used as an initial check when unpacking.
+  # num_bits is the bit size of the QA band. Most will be 8 or 16. though 
+  # some will be 32. 
+  max_value: 65535
+  num_bits: 16
+  
+  
+L7C2L2_QAPixel:
+  description: |
+    Landsat 8 Collection 2 Level 2 QA RADSAT unpacking.
+    aka. Radiometric Saturation and Terrain Occlusion QA
+    
+    For band saturation:
+        0 = no saturation
+        1 = saturated data
+        
+    For terrain occlusion:
+        0 = no terrain occlusion
+        1 = terrain occlusion
+    
+    References doc: LSDS-1328 Version 6.0, September 2020
+    
+    Confirmed products:
+        Google Earth Engine: LANDSAT/LC08/C02/T1_L2
+        AWS Store XXXXX
+        
+  flag_info:
+  - Band 1 Data Saturation:
+    - 0
+  - Band 2 Data Saturation:
+    - 1
+  - Band 3 Data Saturation:
+    - 2
+  - Band 4 Data Saturation:
+    - 3
+  - Band 5 Data Saturation:
+    - 4
+    - 5
+  max_value: 65535
+  num_bits: 16
