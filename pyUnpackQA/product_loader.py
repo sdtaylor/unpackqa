@@ -70,13 +70,13 @@ def list_qa_flags(product):
     Parameters
     ----------
     product : str
-        A unique product identifer. See list_products() for availability.
+        A unique product identifer. See `list_products()` for availability.
 
     Returns
     -------
     list
         List of QA flags. The descripters are used in the flag argument
-        of unpack_to_array() and unpack_to_dict().
+        of `unpack_to_array()` and `unpack_to_dict()`.
 
     """
     if product in all_products:
