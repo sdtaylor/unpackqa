@@ -74,6 +74,8 @@ L8C2L2_QARADSAT:
         Band 5 Data Saturation:
         - 4
         Band 6 Data Saturation:
+        - 5
+        Band 7 Data Saturation:
         - 6
         # bit 7 unused
         Band 9 Data Saturation:
