@@ -7,7 +7,9 @@ has_toc: true
 
 # L8C2L2_QAPixel
 
-Landsat 8 Collection 2 Level 2 QA Pixel unpacking.
+Landsat 8 Collection 2 Level 2 QA Pixel unpacking.  
+
+`from pyUnpackQA.Landsat import L8C2L2_QAPixel`  
 
 | Bits  | Flag Name               | Descriptions                                                                                              |
 |-------|-------------------------|-----------------------------------------------------------------------------------------------------------|
@@ -32,8 +34,11 @@ Landsat 8 Collection 2 Level 2 QA Pixel unpacking.
 
 # L8C2L2_QARADSAT
 
-Landsat 8 Collection 2 Level 2 QA RADSAT unpacking.
+Landsat 8 Collection 2 Level 2 QA RADSAT unpacking.  
 aka. Radiometric Saturation and Terrain Occlusion QA
+
+
+`from pyUnpackQA.Landsat import L8C2L2_QARADSAT`  
     
 | Bits  | Flag Name              | Descriptions                                      |
 |-------|------------------------|---------------------------------------------------|

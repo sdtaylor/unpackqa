@@ -6,6 +6,8 @@ parent: Product List
 
 # MOD13Q1v006_DetailedQA
 MODIS/Terra Vegetation Indices 16-Day L3 Global 250m  
+
+`from pyUnpackQA.MODIS import MOD13Q1v006_DetailedQA`  
     
 | Bits  | Flag Name                  | Descriptions                                                                                                                                                                                                                                                                                                      |
 |-------|----------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -26,12 +28,15 @@ MODIS/Terra Vegetation Indices 16-Day L3 Global 250m
 - [https://lpdaac.usgs.gov/products/mod13q1v006/](https://lpdaac.usgs.gov/products/mod13q1v006/])
 
     
-### Confirmed products:  
+### Confirmed products
 - Google Earth Engine: MODIS/006/MOD13Q1  
 
 # MOD13A1v006_DetailedQA
 MODIS/Terra Vegetation Indices 16-Day L3 Global 500m  
-    
+
+`from pyUnpackQA.MODIS import MOD13A1v006_DetailedQA`  
+
+The flag descriptions here are the same as in MOD13Q1v006_DetailedQA  
 ### References docs 
 - MODIS Vegetation Index User’s Guide (MOD13 Series) Version 3.00, June 2015 (Collection 6)  
 - [https://lpdaac.usgs.gov/products/mod13q1v006/](https://lpdaac.usgs.gov/products/mod13q1v006/)
