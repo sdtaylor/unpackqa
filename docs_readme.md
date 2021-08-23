@@ -2,9 +2,13 @@
 The package documentation is done thru mkdocs and one custom script to render product descriptions. Using mkdocs is *really* nice and much more pain free than sphinx and readthedocs.  
 
 ### Doc packages
-You need the following for edits.  
+You need the following to build the docs.  
+- mkdocs - primary package
+- mkdocstrings - plugin to build api docs from the docstrings
+- pytkdocs[numpy-style] - docstring parser for mkdocstrings with the numpy "extra"  
+- mkdocs-material - mkdocs material theme https://github.com/squidfunk/mkdocs-material
 
-`pip install mkdocs mkdocstrings'  
+`pip install mkdocs mkdocstrings pytkdocs[numpy-style] mkdocs-material'  
 
 ### Making updates to the product descriptions.
 These edits should made to the yaml files in `pyUnpackQA/product_files/` in the `description` entry. If you make an edit, run `render_product_markdown_files.py` to produce new markdown files in the `docs` folder, which will be picked up by mkdocs.

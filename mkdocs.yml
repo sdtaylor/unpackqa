@@ -1,6 +1,6 @@
 site_name: pyUnpackQA
 use_directory_urls: false
-#theme: "readthedocs"
+theme: "material"
 
 nav:
     - About: 'index.md'
