@@ -11,14 +11,18 @@ class UnpackQABase():
         self.flag_info = product_info['flag_info']
         self.num_bits = product_info['num_bits']
         self.max_value = product_info['max_value']
-        
+
     def _parse_flag_args(self, passed_flags):
         if passed_flags == 'all':
             passed_flags = self._available_qa_flags()
-        else:
+        elif isinstance(passed_flags, list) and len(passed_flags) > 0:
             valid_flags = self._available_qa_flags()
             if not all([f in valid_flags for f in passed_flags]):
-                raise ValueError('Invalid flag name passed')        
+                raise ValueError('Invalid flag name passed')
+        else:
+            error_message = "flags should be a list of strings or 'all'"
+            raise ValueError(error_message)
+        
         return passed_flags
     
     def _validate_arr(self, arr):

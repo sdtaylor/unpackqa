@@ -39,7 +39,20 @@ def test_single_value_float():
     with pytest.raises(TypeError):
         unpack_to_array(1.1, product = default_product)
 
-def test_invalid_flag():
+def test_invalid_flag1():
+    """Invalid flag names should raise an error"""
     qa = np.array([64,128], dtype=np.int16)
     with pytest.raises(ValueError):
         unpack_to_dict(qa, product = default_product, flags=['asdf'])
+
+def test_invalid_flag2():
+    """Non-list flag string should raise an error"""
+    qa = np.array([64,128], dtype=np.int16)
+    with pytest.raises(ValueError):
+        unpack_to_dict(qa, product = default_product, flags='asdf')
+    
+def test_empty_flag_list():
+    """Empty flag list should raise an error"""
+    qa = np.array([64,128], dtype=np.int16)
+    with pytest.raises(ValueError):
+        unpack_to_dict(qa, product = default_product, flags=[])
