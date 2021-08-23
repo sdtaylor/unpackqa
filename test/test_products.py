@@ -26,7 +26,7 @@ def test_qa_flag_list(product):
 @pytest.mark.parametrize('product', all_product_identifiers)
 def test_unpack_array_shape(product):
     """ 
-    unpack_to_array result should match the input shape and have
+    With >1 flag unpack_to_array result should match the input shape and have
     a new axis at position (-1) with the same length as number of flags.
     """
     n_flags = len(list_qa_flags(product = product))
@@ -34,6 +34,18 @@ def test_unpack_array_shape(product):
     
     result = unpack_to_array(qa_array, product = product)
     assert result.shape == target_shape
+
+@pytest.mark.parametrize('product', all_product_identifiers)
+def test_single_flag_array_shape(product):
+    """
+    A single flag should return an array the same shape as the input and
+    *not* have an added axis.
+    """
+    flags = list_qa_flags(product = product)
+    flags = [flags[0]]
+    result = unpack_to_array(qa_array, product = product, flags=flags)
+    
+    assert result.shape == qa_array.shape
 
 @pytest.mark.parametrize('product', all_product_identifiers)
 def test_unpack_dict_shape(product):
@@ -57,7 +69,7 @@ def test_unpack_dict_all_flags(product):
     assert all(all_flags_in_result) and all(all_results_in_flags)
     
 @pytest.mark.parametrize('product', all_product_identifiers)
-def test_unpack_dict_2_flags(product):
+def test_unpack_dict_2_flags1(product):
     """ Get the first and last flag only. """
     flags = list_qa_flags(product = product)
     flags = [flags[0], flags[-1]]
@@ -66,3 +78,43 @@ def test_unpack_dict_2_flags(product):
     all_flags_in_result = [f in result for f in flags]
     all_results_in_flags = [f in flags for f in result.keys()]
     assert all(all_flags_in_result) and all(all_results_in_flags)
+
+@pytest.mark.parametrize('product', all_product_identifiers)
+def test_unpack_dict_2_flags2(product):
+    """ Get the first flag only. """
+    flags = list_qa_flags(product = product)
+    flags = [flags[0]]
+    
+    result = unpack_to_dict(qa_array, product = product, flags=flags)
+    all_flags_in_result = [f in result for f in flags]
+    all_results_in_flags = [f in flags for f in result.keys()]
+    assert all(all_flags_in_result) and all(all_results_in_flags)
+
+@pytest.mark.parametrize('product', all_product_identifiers)
+def test_flag_wrong_axis_ordering(product):
+    """
+    Ordering of the flag axis is the same as the flag list. 
+    When the flag list is reversed, the resulting arrays should not match.
+    """
+    flags = list_qa_flags(product = product)
+    
+    mask1 = unpack_to_array(qa_array, product=product, flags=flags)
+    flags.reverse()
+    mask2 = unpack_to_array(qa_array, product=product, flags=flags)
+    
+    assert not (mask1 == mask2).all()
+
+@pytest.mark.parametrize('product', all_product_identifiers)
+def test_flag_correct_axis_ordering(product):
+    """
+    Ordering of the flag axis is the same as the flag list. 
+    When the flag list is reversed, the resulting arrays should not match.
+    But should match when the axis is flipped back again.
+    """
+    flags = list_qa_flags(product = product)
+    
+    mask1 = unpack_to_array(qa_array, product=product, flags=flags)
+    flags.reverse()
+    mask2 = unpack_to_array(qa_array, product=product, flags=flags)
+    
+    assert (mask1 == np.flip(mask2, axis=-1)).all()

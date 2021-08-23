@@ -21,10 +21,13 @@ def unpack_to_array(qa, product, flags='all'):
     Returns
     -------
     np.array
-        Flag array with shape qa.shape + (n_flags,). Flag order will be 
-        the same order of the `flags` list argument. If `flags` is 'all' 
-        then the order is the same as that in `list_qa_flags()`, which
-        will be aligned with the flag bit order.
+        If only a single flag is set then the array shape will be the same
+        as qa.shape. If > 1 flag is set then an axis will be added in 
+        position -1, with the shape as qa.shape + (n_flags,)
+        Ordering of the flag axis will be the same order of the `flags` 
+        list argument. 
+        If `flags` is 'all' then the order is the same as that in 
+        `available_qa_flags`, which are be aligned with the flag bit order.
 
     """
     if product in all_products:

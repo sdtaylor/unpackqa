@@ -79,10 +79,12 @@ class UnpackQABase():
             # When a flag is > 1 bit then pack it to it's final value
             return np.packbits(bit_array[bit_location], axis=0, bitorder='little')
     
-    def _unpack_to_array(self, qa, flags='all'):
+    def _unpack_array_core(self, qa, flags):
         """
-        Make a mask array with the same shape as qa with an additional axis
-        for all flag masks.
+        The core function for converting the qa array to flag masks. 
+        This returned value here is adjusted slightly based on whether its being 
+        returned as a single array (unpack_to_array) or as a dictionary
+        of arrays (unpack_to_dict)
 
         Parameters
         ----------
@@ -90,21 +92,15 @@ class UnpackQABase():
             An array of any shape with an int-like dtype. If a single integer 
             it will be coverted to a numpy array with length 1. 
         flags : list of strings or 'all', optional
-            List of flags to return. If 'all', the default, then all available
-            flags are returned in the array. See available flags for each 
-            product with `list_qa_flags()`.
+            List of flags to return. 
 
         Returns
         -------
         np.array
-            Flag array with shape qa.shape + (n_flags,). Flag order will be 
-            the same order of the `flags` list argument. If `flags` is 'all' 
-            then the order is the same as that in `available_qa_flags`, which
-            will be aligned with the flag bit order.
+            Flag array with shape (n_flags,) + qa.shape. Flag order will be 
+            the same order of the `flags` list argument. 
 
-        """
-        flags = self._parse_flag_args(flags)
-       
+        """       
         # allow a non-array if it's a single integer. It must still pass
         # other checks though.
         if isinstance(qa, int):
@@ -120,9 +116,46 @@ class UnpackQABase():
             flag_bit_locs = self.flag_info[flag]
             mask_array[flag_i] = self._get_single_flag_mask(bits, flag_bit_locs)
         
-        # put the mask at the end since "adding" an axis is
-        # more intuitive that way
-        return np.moveaxis(mask_array, source = 0, destination = -1)
+        return mask_array
+    
+    def _unpack_to_array(self, qa, flags='all'):
+        """
+        Return a numpy array of mask values. 
+
+        Parameters
+        ----------
+        qa : np.array or int
+            An array of any shape with an int-like dtype. If a single integer 
+            it will be coverted to a numpy array with length 1. 
+        flags : list of strings or 'all', optional
+            List of flags to return. If 'all', the default, then all available
+            flags are returned in the array. See available flags for each 
+            product with `list_qa_flags()`.
+
+        Returns
+        -------
+        np.array
+            If only a single flag is set then the array shape will be the same
+            as qa.shape. If > 1 flag is set then an axis will be added in 
+            position -1, with the shape as qa.shape + (n_flags,)
+            Ordering of the flag axis will be the same order of the `flags` 
+            list argument. 
+            If `flags` is 'all' then the order is the same as that in 
+            `available_qa_flags`, which are be aligned with the flag bit order.
+
+        """
+        flags = self._parse_flag_args(flags)
+        flag_array = self._unpack_array_core(qa = qa, flags = flags)
+        
+        # If a single flag was passed return the original array shape
+        # instead of an added axis of length 1.
+        # If > 1 flag put the mask at the end since "adding" an axis is
+        # more intuitive that way.
+        if len(flags) == 1:
+            flag_array = flag_array[0]
+        else:
+            flag_array = np.moveaxis(flag_array, source = 0, destination = -1)
+        return flag_array
     
     def _unpack_to_dict(self, qa, flags='all'):
         """
@@ -147,6 +180,5 @@ class UnpackQABase():
 
         """
         flags = self._parse_flag_args(flags)
-        flag_array = self._unpack_to_array(qa = qa, flags = flags)
-        flag_array = np.moveaxis(flag_array, source =  -1, destination = 0)
+        flag_array = self._unpack_array_core(qa = qa, flags = flags)
         return {flag:flag_array[flag_i] for flag_i, flag in enumerate(flags)}
