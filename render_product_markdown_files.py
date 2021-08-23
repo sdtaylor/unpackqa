@@ -12,8 +12,16 @@ auto_generated_header = '<!-- this markdown file automatically generated. do not
 
 for sensor, product_list in product_list_by_sensor.items():
     file_text = '{}\n\n'.format(auto_generated_header)
-    for product_name, product_details in product_list.items():
-        file_text += '## {}\n'.format(product_name)
+    for product_identifer, product_details in product_list.items():
+        pass
+        # title text as header and sidebar entry
+        file_text += '## {}\n\n'.format(product_details['product_name'])
+        
+        # product identifer
+        file_text += '**Product Identifer**: `{}`\n\n'.format(product_identifer)
+        
+        # The 'description' entry in the yaml files which details everything else.
+        # 
         # when loading yaml files, whitespace at the end of lines is stripped.
         # so replace newlines with two spaces + newline because that's
         # what markdown expects.
