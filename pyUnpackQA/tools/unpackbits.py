@@ -1,31 +1,34 @@
 import numpy as np
 
 """
-Core of the module here using some bitwise operations.
+Core of the package is here, implemented with some bitwise operations.
 """
 
 def unpackbits(qa_array, num_bits):
     """
     Iterate thru each bit to see if its set or not. 
     
-    This uses two bitwise operators.
+    This uses two bitwise operators. The left shift operator (<<), which is 
+    native to python, and the bitwise_and function in numpy.
     
     This line shifts bits to the left
         bit_loc = 1 << bit
     It makes bit_loc the respective integer when that bit, and only that bit, is set.
     
-    For example with 16 bits 1 in binary is:
+    For example with 16 bits the integer 1 in binary is:
         '0000000000000001'
     shifting it 10 bits to the left to represent the bit 10 location produces:
         '0000010000000000'
-    Which is the  integer 1024    
+    Which is the integer 1024    
     
-    The bitwise_and statement will produce an array with values 0 or 1024 indicating
-    all the locations where that bit was set.
+    The bitwise_and statement of the qa_array and bit_loc will produce an 
+    array with values 0 or 1024 indicating all the locations where that bit was set.
+    This output is boolean but is converted to 0/1 when its put into the
+    bit_array since bit_array as the dtype set to uint8.
     
     Note the returned shape here has the bit axis in position 0 for easier 
-    indexing. In the user facing functions the final *mask* values are in
-    the last axis (position -1)
+    indexing. In the user facing unpack_to_array function the final *mask* 
+    values are in the last axis (position -1).
     
     Parameters
     ----------
