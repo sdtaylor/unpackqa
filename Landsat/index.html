@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Landsat - pyUnpackQA</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">pyUnpackQA</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">About</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../API/" class="nav-link">API</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">Landsat</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../MODIS/" class="nav-link">MODIS</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../product_list/" class="nav-link">Product List</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../API/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../MODIS/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#l8c2l2_qapixel" class="nav-link">L8C2L2_QAPixel</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#l8c2l2_qaradsat" class="nav-link">L8C2L2_QARADSAT</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="l8c2l2_qapixel">L8C2L2_QAPixel</h1>
+<p>Landsat 8 Collection 2 Level 2 QA Pixel unpacking.  </p>
+<p><code>from pyUnpackQA.Landsat import L8C2L2_QAPixel</code>  </p>
+<table>
+<thead>
+<tr>
+<th>Bits</th>
+<th>Flag Name</th>
+<th>Descriptions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Fill</td>
+<td>0 - for image data<br>1 - for fill data</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Dilated Cloud</td>
+<td>0 - for cloud is not dilated or no cloud<br>1 - for cloud dilation</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Cirrus</td>
+<td>0 - for Cirrus Confidence: no confidence level<br>set or Low Confidence<br>1 - for high confidence cirrus</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Cloud</td>
+<td>0 - for cloud confidence is not high<br>1 - for high confidence cloud</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Cloud Shadow</td>
+<td>0 - for Cloud Shadow Confidence is not high<br>1 - for high confidence cloud shadow</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Snow</td>
+<td>0 - for Snow/Ice Confidence is not high<br>1 - for high confidence snow cover</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Clear</td>
+<td>0 - if Cloud or Dilated Cloud bits are set<br>1 - if Cloud and Dilated Cloud bits are not set</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Water</td>
+<td>0 - for land or cloud<br>1 - for water</td>
+</tr>
+<tr>
+<td>8-9</td>
+<td>Cloud Confidence</td>
+<td>0 - for no confidence level set<br>1 - Low confidence<br>2 - Medium confidence<br>3 - High confidence</td>
+</tr>
+<tr>
+<td>10-11</td>
+<td>Cloud Shadow Confidence</td>
+<td>0 - for no confidence level set<br>1 - Low confidence<br>2 - Medium confidence<br>3 - High confidence</td>
+</tr>
+<tr>
+<td>12-13</td>
+<td>Snow/Ice Confidence</td>
+<td>0 - for no confidence level set<br>1 - Low confidence<br>2 - Medium confidence<br>3 - High confidence</td>
+</tr>
+<tr>
+<td>14-15</td>
+<td>Cirrus Confidence</td>
+<td>0 - for no confidence level set<br>1 - Low confidence<br>2 - Medium confidence<br>3 - High confidence</td>
+</tr>
+</tbody>
+</table>
+<h3 id="references-docs">References docs</h3>
+<ul>
+<li>LSDS-1328 Version 6.0, September 2020</li>
+</ul>
+<h3 id="confirmed-products">Confirmed products</h3>
+<ul>
+<li>Google Earth Engine: LANDSAT/LC08/C02/T1_L2</li>
+</ul>
+<h1 id="l8c2l2_qaradsat">L8C2L2_QARADSAT</h1>
+<p>Landsat 8 Collection 2 Level 2 QA RADSAT unpacking.<br />
+aka. Radiometric Saturation and Terrain Occlusion QA</p>
+<p><code>from pyUnpackQA.Landsat import L8C2L2_QARADSAT</code>  </p>
+<table>
+<thead>
+<tr>
+<th>Bits</th>
+<th>Flag Name</th>
+<th>Descriptions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Band 1 Data Saturation</td>
+<td>0 - no saturation<br>1 - saturated data</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Band 2 Data Saturation</td>
+<td>0 - no saturation<br>1 - saturated data</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Band 3 Data Saturation</td>
+<td>0 - no saturation<br>1 - saturated data</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Band 4 Data Saturation</td>
+<td>0 - no saturation<br>1 - saturated data</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Band 5 Data Saturation</td>
+<td>0 - no saturation<br>1 - saturated data</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Band 6 Data Saturation</td>
+<td>0 - no saturation<br>1 - saturated data</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Band 7 Data Saturation</td>
+<td>0 - no saturation<br>1 - saturated data</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Unused</td>
+<td></td>
+</tr>
+<tr>
+<td>8</td>
+<td>Band 9 Data Saturation</td>
+<td>0 - no saturation<br>1 - saturated data</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Unused</td>
+<td></td>
+</tr>
+<tr>
+<td>10</td>
+<td>Unused</td>
+<td></td>
+</tr>
+<tr>
+<td>11</td>
+<td>Terrain occlusion</td>
+<td>0 - no terrain occlusion<br>1 - terrain occlusion</td>
+</tr>
+<tr>
+<td>12-15</td>
+<td>Unused</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="references-docs_1">References docs</h3>
+<ul>
+<li>LSDS-1328 Version 6.0, September 2020</li>
+</ul>
+<h3 id="confirmed-products_1">Confirmed products</h3>
+<ul>
+<li>Google Earth Engine: LANDSAT/LC08/C02/T1_L2</li>
+</ul></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
