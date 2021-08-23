@@ -113,8 +113,6 @@ class UnpackQABase():
         self._validate_arr(qa)
         
         bits = unpackbits(qa, num_bits = self.num_bits)
-        # put the bit axis in front for easier indexing
-        bits = np.moveaxis(bits, source =  -1, destination = 0)
         
         n_flags = len(flags)
         mask_array = np.empty(shape = (n_flags,) + qa.shape, dtype=np.uint8)

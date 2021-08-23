@@ -23,6 +23,10 @@ def unpackbits(qa_array, num_bits):
     The bitwise_and statement will produce an array with values 0 or 1024 indicating
     all the locations where that bit was set.
     
+    Note the returned shape here has the bit axis in position 0 for easier 
+    indexing. In the user facing functions the final *mask* values are in
+    the last axis (position -1)
+    
     Parameters
     ----------
     qa_array : np.array
@@ -33,7 +37,7 @@ def unpackbits(qa_array, num_bits):
     Returns
     -------
     np.array int8
-        0/1 array with size qa_array.shape + (num_bits,)
+        0/1 array with size (num_bits,) + qa_array.shape
         
     """
     original_shape = qa_array.shape
@@ -45,7 +49,7 @@ def unpackbits(qa_array, num_bits):
         bit_loc = 1<<bit
         bit_array[bit] = np.bitwise_and(qa_array,bit_loc) == bit_loc
     
-    return np.moveaxis(bit_array, source = 0, destination = -1)
+    return bit_array
 
 
 """
