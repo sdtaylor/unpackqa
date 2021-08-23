@@ -7,15 +7,16 @@
         
         
         
-        <link rel="shortcut icon" href="../img/favicon.ico">
+        <link rel="shortcut icon" href="img/favicon.ico">
         <title>MODIS - pyUnpackQA</title>
-        <link href="../css/bootstrap.min.css" rel="stylesheet">
-        <link href="../css/font-awesome.min.css" rel="stylesheet">
-        <link href="../css/base.css" rel="stylesheet">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+        <link href="assets/_mkdocstrings.css" rel="stylesheet">
 
-        <script src="../js/jquery-1.10.2.min.js" defer></script>
-        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="js/jquery-1.10.2.min.js" defer></script>
+        <script src="js/bootstrap.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script> 
     </head>
@@ -23,7 +24,7 @@
     <body>
         <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
             <div class="container">
-                <a class="navbar-brand" href="..">pyUnpackQA</a>
+                <a class="navbar-brand" href="index.html">pyUnpackQA</a>
                 <!-- Expander button -->
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
                     <span class="navbar-toggler-icon"></span>
@@ -34,35 +35,40 @@
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
                             <li class="navitem">
-                                <a href=".." class="nav-link">About</a>
+                                <a href="index.html" class="nav-link">About</a>
                             </li>
                             <li class="navitem">
-                                <a href="../API/" class="nav-link">API</a>
+                                <a href="quickstart.html" class="nav-link">Quickstart</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Products' <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="Landsat.html" class="dropdown-item">Landsat</a>
+</li>
+                                    
+<li>
+    <a href="MODIS.html" class="dropdown-item active">MODIS</a>
+</li>
+                                </ul>
                             </li>
                             <li class="navitem">
-                                <a href="../Landsat/" class="nav-link">Landsat</a>
-                            </li>
-                            <li class="navitem active">
-                                <a href="./" class="nav-link">MODIS</a>
+                                <a href="api.html" class="nav-link">API Reference</a>
                             </li>
                             <li class="navitem">
-                                <a href="../product_list/" class="nav-link">Product List</a>
+                                <a href="https://github.com/sdtaylor/pyUnpackQA" class="nav-link">GitHub Repo</a>
                             </li>
                         </ul>
 
                     <ul class="nav navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
-                                <i class="fa fa-search"></i> Search
-                            </a>
-                        </li>
                             <li class="nav-item">
-                                <a rel="prev" href="../Landsat/" class="nav-link">
+                                <a rel="prev" href="Landsat.html" class="nav-link">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a rel="next" href="../product_list/" class="nav-link">
+                                <a rel="next" href="api.html" class="nav-link">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -84,12 +90,7 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#mod13q1v006_detailedqa" class="nav-link">MOD13Q1v006_DetailedQA</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="1"><a href="#mod13a1v006_detailedqa" class="nav-link">MOD13A1v006_DetailedQA</a>
+            <li class="nav-item" data-level="2"><a href="#modisterra-vegetation-indices-16-day-l3-global-250m" class="nav-link">MODIS/Terra Vegetation Indices 16-Day L3 Global 250m</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -98,9 +99,13 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="mod13q1v006_detailedqa">MOD13Q1v006_DetailedQA</h1>
-<p>MODIS/Terra Vegetation Indices 16-Day L3 Global 250m  </p>
-<p><code>from pyUnpackQA.MODIS import MOD13Q1v006_DetailedQA</code>  </p>
+<!-- this markdown file automatically generated. do not edit directly-->
+
+<h2 id="modisterra-vegetation-indices-16-day-l3-global-250m">MODIS/Terra Vegetation Indices 16-Day L3 Global 250m</h2>
+<p><strong>Product Identifer</strong>: <code>MOD13Q1v006_DetailedQA</code></p>
+<h3 id="details">Details</h3>
+<p>The MODIS Vegatation indice QA band  </p>
+<h3 id="flag-descriptions">Flag Descriptions</h3>
 <table>
 <thead>
 <tr>
@@ -158,26 +163,11 @@
 </tbody>
 </table>
 <h3 id="references-docs">References docs</h3>
-<ul>
-<li>MODIS Vegetation Index User’s Guide (MOD13 Series) Version 3.00, June 2015 (Collection 6)  </li>
-<li><a href="https://lpdaac.usgs.gov/products/mod13q1v006/]">https://lpdaac.usgs.gov/products/mod13q1v006/</a></li>
-</ul>
+<p>MODIS Vegetation Index User’s Guide (MOD13 Series) Version 3.00, June 2015 (Collection 6)  <br />
+https://lpdaac.usgs.gov/products/mod13q1v006/    </p>
 <h3 id="confirmed-products">Confirmed products</h3>
 <ul>
-<li>Google Earth Engine: MODIS/006/MOD13Q1  </li>
-</ul>
-<h1 id="mod13a1v006_detailedqa">MOD13A1v006_DetailedQA</h1>
-<p>MODIS/Terra Vegetation Indices 16-Day L3 Global 500m  </p>
-<p><code>from pyUnpackQA.MODIS import MOD13A1v006_DetailedQA</code>  </p>
-<p>The flag descriptions here are the same as in MOD13Q1v006_DetailedQA  </p>
-<h3 id="references-docs_1">References docs</h3>
-<ul>
-<li>MODIS Vegetation Index User’s Guide (MOD13 Series) Version 3.00, June 2015 (Collection 6)  </li>
-<li><a href="https://lpdaac.usgs.gov/products/mod13q1v006/">https://lpdaac.usgs.gov/products/mod13q1v006/</a></li>
-</ul>
-<h3 id="confirmed-products_1">Confirmed products</h3>
-<ul>
-<li>Google Earth Engine: MODIS/006/MOD13A1  </li>
+<li>Google Earth Engine: MODIS/006/MOD13Q1    </li>
 </ul></div>
             </div>
         </div>
@@ -187,33 +177,12 @@
             <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>
         <script>
-            var base_url = "..",
+            var base_url = ".",
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
         </script>
-        <script src="../js/base.js" defer></script>
-        <script src="../search/main.js" defer></script>
+        <script src="js/base.js" defer></script>
 
-        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="searchModalLabel">Search</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            </div>
-            <div class="modal-body">
-                <p>From here you can search these documents. Enter your search terms below.</p>
-                <form>
-                    <div class="form-group">
-                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
-                    </div>
-                </form>
-                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
-</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+        <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

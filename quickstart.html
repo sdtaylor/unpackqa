@@ -4,11 +4,11 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="None">
+        
         
         
         <link rel="shortcut icon" href="img/favicon.ico">
-        <title>pyUnpackQA</title>
+        <title>Quickstart - pyUnpackQA</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/base.css" rel="stylesheet">
@@ -21,7 +21,7 @@
         <script>hljs.initHighlightingOnLoad();</script> 
     </head>
 
-    <body class="homepage">
+    <body>
         <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
             <div class="container">
                 <a class="navbar-brand" href="index.html">pyUnpackQA</a>
@@ -34,10 +34,10 @@
                 <div id="navbar-collapse" class="navbar-collapse collapse">
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
-                            <li class="navitem active">
+                            <li class="navitem">
                                 <a href="index.html" class="nav-link">About</a>
                             </li>
-                            <li class="navitem">
+                            <li class="navitem active">
                                 <a href="quickstart.html" class="nav-link">Quickstart</a>
                             </li>
                             <li class="dropdown">
@@ -63,12 +63,12 @@
 
                     <ul class="nav navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a rel="prev" class="nav-link disabled">
+                                <a rel="prev" href="index.html" class="nav-link">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a rel="next" href="quickstart.html" class="nav-link">
+                                <a rel="next" href="Landsat.html" class="nav-link">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -90,13 +90,20 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#pyunpackqa" class="nav-link">pyUnpackQA</a>
+            <li class="nav-item" data-level="1"><a href="#quickstart" class="nav-link">Quickstart</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#listing-available-sensor-flags-and-products" class="nav-link">Listing available sensor, flags, and products.</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="1"><a href="#installation" class="nav-link">Installation</a>
+            <li class="nav-item" data-level="2"><a href="#unpacking-to-an-array" class="nav-link">Unpacking to an array</a>
               <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#unpacking-to-a-dictionary" class="nav-link">Unpacking to a dictionary</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -104,17 +111,62 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="pyunpackqa">pyUnpackQA</h1>
-<p>Methods for unpacking and labelling all common remote sensing QA bands which are stored in bit-wise values.  </p>
-<ul>
-<li>Works with single QA values, 1D arrays (eg. time series), or 2D arrays (eg. full scenes).  </li>
-<li>The same methods are used for all sensors, with specific product flags specified via arguments.  </li>
-<li>No file reading or writing, everything is handled as pre-loaded arrays.  </li>
-<li>Requires python 3.6+, with numpy and pyyaml as the only dependencies.  </li>
-</ul>
-<h1 id="installation">Installation</h1>
-<p>Install via pip directly from the github repo:</p>
-<pre><code>pip install git+git://github.com/sdtaylor/pyUnpackQA
+<h1 id="quickstart">Quickstart</h1>
+<h2 id="listing-available-sensor-flags-and-products">Listing available sensor, flags, and products.</h2>
+<p><code>pyUnpackQA.list_sensors()</code>,<code>pyUnpackQA.list_products()</code><br />
+These list the available sensors and sensor data products, respectively. By default they list everything configured in the package. </p>
+<p><code>pyUnpackQA.list_qa_flags()</code>
+This lists the flags which are parsed from the QA bits. These match the Flag Name column in the product description tables. A product name must be specified here. For example:</p>
+<pre><code>import numpy as np
+from pyUnpackQA
+
+pyUnpackQA.list_qa_flags('L8C2L2_QAPixel')
+
+['Fill',
+ 'Dilated Cloud',
+ 'Cirrus',
+ 'Cloud',
+ 'Cloud Shadow',
+ 'Snow',
+ 'Clear',
+ 'Water',
+ 'Cloud Confidence',
+ 'Cloud Shadow Confidence',
+ 'Snow/Ice Confidence',
+ 'Cirrus Confidence']
+</code></pre>
+<h2 id="unpacking-to-an-array">Unpacking to an array</h2>
+<p><code>pyUnpackQA.unpack_to_array(qa, flags='all')</code><br />
+This will return the QA values of a numpy array or integer. The returned value will have an entry for all flags listed in the <code>flags</code> argument. By default <code>flags</code> is <code>all</code> which will return all flags listed in <code>list_qa_flags()</code>.</p>
+<pre><code>pyUnpackQA.unpack_to_array(21284)
+array([[0, 0, 1, 0, 0, 1, 0, 0, 3, 0, 1, 1]], dtype=uint8)
+
+qa_array = np.array([[21284,0],[21284,0]])
+qa_array.shape
+(2,2)
+pyUnpackQA.unpack_to_array(qa_array).shape
+(2,2,12)
+</code></pre>
+<h2 id="unpacking-to-a-dictionary">Unpacking to a dictionary</h2>
+<p><code>pyUnpackQAunpack_to_dict(qa, flags='all')</code><br />
+This is similar to <code>unpack_to_array</code>, but instead of a stacked array for all flags, it returns a dictionary where the keys are the flag names, and the value for each key is the flag array. The shape of each array is the same as the input qa.shape. This is usefull when single pixels or time series of pixels are being used, as this can be put directly into a pandas DataFrame.</p>
+<pre><code>qa_array = np.array([56598, 56598,0,0,56598])
+pyUnpackQA.unpack_to_dict(qa_array)
+{'Fill': array([0, 0, 0, 0, 0], dtype=uint8),
+ 'Dilated Cloud': array([1, 1, 0, 0, 1], dtype=uint8),
+ 'Cirrus': array([1, 1, 0, 0, 1], dtype=uint8),
+ 'Cloud': array([0, 0, 0, 0, 0], dtype=uint8),
+ 'Cloud Shadow': array([1, 1, 0, 0, 1], dtype=uint8),
+ 'Snow': array([0, 0, 0, 0, 0], dtype=uint8),
+ 'Clear': array([0, 0, 0, 0, 0], dtype=uint8),
+ 'Water': array([0, 0, 0, 0, 0], dtype=uint8),
+ 'Cloud Confidence': array([1, 1, 0, 0, 1], dtype=uint8),
+ 'Cloud Shadow Confidence': array([3, 3, 0, 0, 3], dtype=uint8),
+ 'Snow/Ice Confidence': array([1, 1, 0, 0, 1], dtype=uint8),
+ 'Cirrus Confidence': array([3, 3, 0, 0, 3], dtype=uint8)}
+
+pyUnpackQA.unpack_to_dict(qa_array)['Cloud'].shape
+(5,)
 </code></pre></div>
             </div>
         </div>
@@ -172,8 +224,3 @@
 
     </body>
 </html>
-
-<!--
-MkDocs version : 1.2.2
-Build Date UTC : 2021-08-23 21:46:22.200452+00:00
--->
