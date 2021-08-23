@@ -1,9 +1,7 @@
 import numpy as np
 import pytest
 
-from pyUnpackQA.tools.unpackbits import unpackbits
-from pyUnpackQA.tools.unpackbits2 import int16_to_bits
-
+from pyUnpackQA.tools.unpackbits import unpackbits, int16_to_bits
 
 
 def test_compare_unpack_methods():
