@@ -1,15 +1,33 @@
 
 L8C2L2_QAPixel:
+    product_name: 'Landsat 8 Collection 2 Level 2 QA Pixel'
     description: |
-        Landsat 8 Collection 2 Level 2 QA Pixel unpacking.
+        ### Details
+        This is the primary QA pixel for Landsat 8 C2L2. 
         
-        References doc: Landsat 8 Collection 2 (C2) Level 2 
-                        Science Product (L2SP) Guide
-                        LSDS-1619 Version 2.0, September 2020
+        ### Flag Descriptions
         
-        Confirmed products:
-            Google Earth Engine: LANDSAT/LC08/C02/T1_L2
-            AWS Store XXXXX
+        | Bits  | Flag Name               | Descriptions                                                                                              |
+        |-------|-------------------------|-----------------------------------------------------------------------------------------------------------|
+        | 0     | Fill                    | 0 - for image data<br>1 - for fill data                                                                   |
+        | 1     | Dilated Cloud           | 0 - for cloud is not dilated or no cloud<br>1 - for cloud dilation                                        |
+        | 2     | Cirrus                  | 0 - for Cirrus Confidence: no confidence level<br>set or Low Confidence<br>1 - for high confidence cirrus |
+        | 3     | Cloud                   | 0 - for cloud confidence is not high<br>1 - for high confidence cloud                                     |
+        | 4     | Cloud Shadow            | 0 - for Cloud Shadow Confidence is not high<br>1 - for high confidence cloud shadow                       |
+        | 5     | Snow                    | 0 - for Snow/Ice Confidence is not high<br>1 - for high confidence snow cover                             |
+        | 6     | Clear                   | 0 - if Cloud or Dilated Cloud bits are set<br>1 - if Cloud and Dilated Cloud bits are not set             |
+        | 7     | Water                   | 0 - for land or cloud<br>1 - for water                                                                    |
+        | 8-9   | Cloud Confidence        | 0 - for no confidence level set<br>1 - Low confidence<br>2 - Medium confidence<br>3 - High confidence     |
+        | 10-11 | Cloud Shadow Confidence | 0 - for no confidence level set<br>1 - Low confidence<br>2 - Medium confidence<br>3 - High confidence     |
+        | 12-13 | Snow/Ice Confidence     | 0 - for no confidence level set<br>1 - Low confidence<br>2 - Medium confidence<br>3 - High confidence     |
+        | 14-15 | Cirrus Confidence       | 0 - for no confidence level set<br>1 - Low confidence<br>2 - Medium confidence<br>3 - High confidence     |
+        
+        ### References docs 
+        Landsat 8 Collection 2 (C2) Level 2 Science Product (L2SP) Guide (LSDS-1619 Version 2.0, September 2020)
+        
+        ### Confirmed products
+        - Google Earth Engine: LANDSAT/LC08/C02/T1_L2
+        - AWS Store XXXXX
     
     flag_info:
         Fill:
@@ -46,25 +64,36 @@ L8C2L2_QAPixel:
     
     
 L8C2L2_QARADSAT:
+    product_name: 'Landsat 8 Collection 2 Level 2 QA RADSAT'
     description: |
-        Landsat 8 Collection 2 Level 2 QA RADSAT unpacking.
-        aka. Radiometric Saturation and Terrain Occlusion QA
+        ### Details
+        This is the Radiometric Saturation and Terrain Occlusion QA  
         
-        For band saturation:
-            0 = no saturation
-            1 = saturated data
-            
-        For terrain occlusion:
-            0 = no terrain occlusion
-            1 = terrain occlusion
+        ### Flag Descriptions
         
-        References doc: Landsat 8 Collection 2 (C2) Level 2 
-                        Science Product (L2SP) Guide
-                        LSDS-1619 Version 2.0, September 2020
+        | Bits  | Flag Name              | Descriptions                                      |
+        |-------|------------------------|---------------------------------------------------|
+        | 0     | Band 1 Data Saturation | 0 - no saturation<br>1 - saturated data           |
+        | 1     | Band 2 Data Saturation | 0 - no saturation<br>1 - saturated data           |
+        | 2     | Band 3 Data Saturation | 0 - no saturation<br>1 - saturated data           |
+        | 3     | Band 4 Data Saturation | 0 - no saturation<br>1 - saturated data           |
+        | 4     | Band 5 Data Saturation | 0 - no saturation<br>1 - saturated data           |
+        | 5     | Band 6 Data Saturation | 0 - no saturation<br>1 - saturated data           |
+        | 6     | Band 7 Data Saturation | 0 - no saturation<br>1 - saturated data           |
+        | 7     | Unused                 |                                                   |
+        | 8     | Band 9 Data Saturation | 0 - no saturation<br>1 - saturated data           |
+        | 9     | Unused                 |                                                   |
+        | 10    | Unused                 |                                                   |
+        | 11    | Terrain occlusion      | 0 - no terrain occlusion<br>1 - terrain occlusion |
+        | 12-15 | Unused                 |                                                   |
         
-        Confirmed products:
-            Google Earth Engine: LANDSAT/LC08/C02/T1_L2
-            AWS Store XXXXX
+        
+        ### References docs 
+        Landsat 8 Collection 2 (C2) Level 2 Science Product (L2SP) Guide (LSDS-1619 Version 2.0, September 2020)
+        
+        ### Confirmed products
+        - Google Earth Engine: LANDSAT/LC08/C02/T1_L2
+        - AWS Store XXXXX
           
     flag_info:
         Band 1 Data Saturation:
