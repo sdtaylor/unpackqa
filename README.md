@@ -25,7 +25,7 @@ from pyUnpackQA import unpack_to_array
 
 # Specify the Landsat 8 Collection 2 Level 2 QA Pixel
 # see all identifiers in pyUnpackQA.list_products()
-l8_identifer = 'L8C2L2_QAPixel'
+l8_identifer = 'LANDSAT_8_C2_L2_QAPixel'
 
 qa_array = np.array([[21284,0],[21284,0]])
 

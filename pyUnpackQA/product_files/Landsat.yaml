@@ -1,5 +1,5 @@
 
-L8C2L2_QAPixel:
+LANDSAT_8_C2_L2_QAPixel:
     product_name: 'Landsat 8 Collection 2 Level 2 QA Pixel'
     description: |
         ### Details
@@ -62,8 +62,7 @@ L8C2L2_QAPixel:
     max_value: 65535
     num_bits: 16
     
-    
-L8C2L2_QARADSAT:
+LANDSAT_8_C2_L2_QARADSAT:
     product_name: 'Landsat 8 Collection 2 Level 2 QA RADSAT'
     description: |
         ### Details

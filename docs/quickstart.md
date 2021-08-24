@@ -11,7 +11,7 @@ This lists the flags which are parsed from the QA bits. These match the Flag Nam
 import numpy as np
 from pyUnpackQA
 
-pyUnpackQA.list_qa_flags('L8C2L2_QAPixel')
+pyUnpackQA.list_qa_flags('LANDSAT_8_C2_L2_QAPixel')
 
 ['Fill',
  'Dilated Cloud',
@@ -28,27 +28,27 @@ pyUnpackQA.list_qa_flags('L8C2L2_QAPixel')
 ```
 
 ## Unpacking to an array
-`pyUnpackQA.unpack_to_array(qa, flags='all')`  
+`pyUnpackQA.unpack_to_array(qa, product='LANDSAT_8_C2_L2_QAPixel', flags='all')`  
 This will return the QA values of a numpy array or integer. The returned value will have an entry for all flags listed in the `flags` argument. By default `flags` is `all` which will return all flags listed in `list_qa_flags()`.
 
 ```
-pyUnpackQA.unpack_to_array(21284)
+pyUnpackQA.unpack_to_array(21284, product='LANDSAT_8_C2_L2_QAPixel')
 array([[0, 0, 1, 0, 0, 1, 0, 0, 3, 0, 1, 1]], dtype=uint8)
 
 qa_array = np.array([[21284,0],[21284,0]])
 qa_array.shape
 (2,2)
-pyUnpackQA.unpack_to_array(qa_array).shape
+pyUnpackQA.unpack_to_array(qa_array, product='LANDSAT_8_C2_L2_QAPixel').shape
 (2,2,12)
 ```
 
 ## Unpacking to a dictionary
-`pyUnpackQAunpack_to_dict(qa, flags='all')`  
+`pyUnpackQAunpack_to_dict(qa, product='LANDSAT_8_C2_L2_QAPixel', flags='all')`  
 This is similar to `unpack_to_array`, but instead of a stacked array for all flags, it returns a dictionary where the keys are the flag names, and the value for each key is the flag array. The shape of each array is the same as the input qa.shape. This is usefull when single pixels or time series of pixels are being used, as this can be put directly into a pandas DataFrame.
 
 ```
 qa_array = np.array([56598, 56598,0,0,56598])
-pyUnpackQA.unpack_to_dict(qa_array)
+pyUnpackQA.unpack_to_dict(qa_array, product='LANDSAT_8_C2_L2_QAPixel')
 {'Fill': array([0, 0, 0, 0, 0], dtype=uint8),
  'Dilated Cloud': array([1, 1, 0, 0, 1], dtype=uint8),
  'Cirrus': array([1, 1, 0, 0, 1], dtype=uint8),
@@ -62,6 +62,6 @@ pyUnpackQA.unpack_to_dict(qa_array)
  'Snow/Ice Confidence': array([1, 1, 0, 0, 1], dtype=uint8),
  'Cirrus Confidence': array([3, 3, 0, 0, 3], dtype=uint8)}
 
-pyUnpackQA.unpack_to_dict(qa_array)['Cloud'].shape
+pyUnpackQA.unpack_to_dict(qa_array, product='LANDSAT_8_C2_L2_QAPixel')['Cloud'].shape
 (5,)
 ```
