@@ -226,18 +226,33 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="examples.html" class="md-nav__link">
+        Examples
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
     
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
       
-      <label class="md-nav__link" for="__nav_3">
+      <label class="md-nav__link" for="__nav_4">
         Products'
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Products'" data-md-level="1">
-        <label class="md-nav__title" for="__nav_3">
+        <label class="md-nav__title" for="__nav_4">
           <span class="md-nav__icon md-icon"></span>
           Products'
         </label>
@@ -371,7 +386,7 @@ This lists the flags which are parsed from the QA bits. These match the Flag Nam
 <pre><code>import numpy as np
 from pyUnpackQA
 
-pyUnpackQA.list_qa_flags('L8C2L2_QAPixel')
+pyUnpackQA.list_qa_flags('LANDSAT_8_C2_L2_QAPixel')
 
 ['Fill',
  'Dilated Cloud',
@@ -387,22 +402,22 @@ pyUnpackQA.list_qa_flags('L8C2L2_QAPixel')
  'Cirrus Confidence']
 </code></pre>
 <h2 id="unpacking-to-an-array">Unpacking to an array</h2>
-<p><code>pyUnpackQA.unpack_to_array(qa, flags='all')</code><br />
+<p><code>pyUnpackQA.unpack_to_array(qa, product='LANDSAT_8_C2_L2_QAPixel', flags='all')</code><br />
 This will return the QA values of a numpy array or integer. The returned value will have an entry for all flags listed in the <code>flags</code> argument. By default <code>flags</code> is <code>all</code> which will return all flags listed in <code>list_qa_flags()</code>.</p>
-<pre><code>pyUnpackQA.unpack_to_array(21284)
+<pre><code>pyUnpackQA.unpack_to_array(21284, product='LANDSAT_8_C2_L2_QAPixel')
 array([[0, 0, 1, 0, 0, 1, 0, 0, 3, 0, 1, 1]], dtype=uint8)
 
 qa_array = np.array([[21284,0],[21284,0]])
 qa_array.shape
 (2,2)
-pyUnpackQA.unpack_to_array(qa_array).shape
+pyUnpackQA.unpack_to_array(qa_array, product='LANDSAT_8_C2_L2_QAPixel').shape
 (2,2,12)
 </code></pre>
 <h2 id="unpacking-to-a-dictionary">Unpacking to a dictionary</h2>
-<p><code>pyUnpackQAunpack_to_dict(qa, flags='all')</code><br />
+<p><code>pyUnpackQAunpack_to_dict(qa, product='LANDSAT_8_C2_L2_QAPixel', flags='all')</code><br />
 This is similar to <code>unpack_to_array</code>, but instead of a stacked array for all flags, it returns a dictionary where the keys are the flag names, and the value for each key is the flag array. The shape of each array is the same as the input qa.shape. This is usefull when single pixels or time series of pixels are being used, as this can be put directly into a pandas DataFrame.</p>
 <pre><code>qa_array = np.array([56598, 56598,0,0,56598])
-pyUnpackQA.unpack_to_dict(qa_array)
+pyUnpackQA.unpack_to_dict(qa_array, product='LANDSAT_8_C2_L2_QAPixel')
 {'Fill': array([0, 0, 0, 0, 0], dtype=uint8),
  'Dilated Cloud': array([1, 1, 0, 0, 1], dtype=uint8),
  'Cirrus': array([1, 1, 0, 0, 1], dtype=uint8),
@@ -416,7 +431,7 @@ pyUnpackQA.unpack_to_dict(qa_array)
  'Snow/Ice Confidence': array([1, 1, 0, 0, 1], dtype=uint8),
  'Cirrus Confidence': array([3, 3, 0, 0, 3], dtype=uint8)}
 
-pyUnpackQA.unpack_to_dict(qa_array)['Cloud'].shape
+pyUnpackQA.unpack_to_dict(qa_array, product='LANDSAT_8_C2_L2_QAPixel')['Cloud'].shape
 (5,)
 </code></pre>
                 
@@ -454,13 +469,13 @@ pyUnpackQA.unpack_to_dict(qa_array)['Cloud'].shape
       
       
         
-        <a href="Landsat.html" class="md-footer__link md-footer__link--next" aria-label="Next: Landsat" rel="next">
+        <a href="examples.html" class="md-footer__link md-footer__link--next" aria-label="Next: Examples" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Landsat
+              Examples
             </div>
           </div>
           <div class="md-footer__button md-icon">
