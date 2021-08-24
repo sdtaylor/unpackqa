@@ -40,12 +40,12 @@ for test_i, test in enumerate(l8_test_values1):
 @pytest.mark.parametrize('test_qa_value, expected_output', l8_test_cases)
 def test_confirm_flag_values(test_qa_value, expected_output):
     """Output should match known values above"""
-    output = unpack_to_dict(test_qa_value, product='L8C2L2_QAPixel', flags='all')
+    output = unpack_to_dict(test_qa_value, product='LANDSAT_8_C2_L2_QAPixel', flags='all')
     assert output == expected_output
 
 @pytest.mark.parametrize('test_qa_value, expected_output', l8_test_cases)
 def test_confirm_wrong_flag_values(test_qa_value, expected_output):
     """Perturbe a single value to ensure wrong arrays are indeed caught"""
-    output = unpack_to_dict(test_qa_value, product='L8C2L2_QAPixel', flags='all')
+    output = unpack_to_dict(test_qa_value, product='LANDSAT_8_C2_L2_QAPixel', flags='all')
     output['Clear'] += 1
     assert output != expected_output

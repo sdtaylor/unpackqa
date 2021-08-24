@@ -3,7 +3,7 @@ import numpy as np
 
 from pyUnpackQA import unpack_to_array, unpack_to_dict
 
-default_product = 'L8C2L2_QAPixel'
+default_product = 'LANDSAT_8_C2_L2_QAPixel'
 
 def test_max_value():
     """Raise error when values is too large"""
