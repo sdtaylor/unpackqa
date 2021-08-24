@@ -7,6 +7,7 @@ You need the following to build the docs.
 - mkdocstrings - plugin to build api docs from the docstrings
 - pytkdocs[numpy-style] - docstring parser for mkdocstrings with the numpy "extra"  
 - mkdocs-material - mkdocs material theme https://github.com/squidfunk/mkdocs-material
+- mkdocs-exclude - plugin to exclude files or folders within the docs directory. https://github.com/apenwarr/mkdocs-exclude
 
 `pip install mkdocs mkdocstrings pytkdocs[numpy-style] mkdocs-material'  
 
@@ -26,3 +27,6 @@ This will not pickup any changes in the product yaml files. To see updates with 
 
 ### To update the primary doc site.
 Once everything is as you like run `mkdocs gh-deploy` to automatically build the site and push to the gh-pages repo. 
+
+### TODO.
+note on the examples
