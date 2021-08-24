@@ -13,7 +13,7 @@ Just iterating thru all products as integration tests.
 
 qa_array = np.array([[8,8,8],
                      [16,16,16],
-                     [256,256,256]])
+                     [255,255,255]])
 
 all_product_identifiers = list_products(sensor='all')
 
