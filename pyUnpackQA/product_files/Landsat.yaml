@@ -83,7 +83,7 @@ LANDSAT_8_C2_L2_QARADSAT:
         | 8     | Band 9 Data Saturation | 0 - no saturation<br>1 - saturated data           |
         | 9     | Unused                 |                                                   |
         | 10    | Unused                 |                                                   |
-        | 11    | Terrain occlusion      | 0 - no terrain occlusion<br>1 - terrain occlusion |
+        | 11    | Terrain Occlusion      | 0 - no terrain occlusion<br>1 - terrain occlusion |
         | 12-15 | Unused                 |                                                   |
         
         
@@ -113,7 +113,7 @@ LANDSAT_8_C2_L2_QARADSAT:
         Band 9 Data Saturation:
         - 8
         # bits 9 & 10 unused
-        Terrain occlusion:
+        Terrain Occlusion:
         - 11
         # bits 12-15 unused
     
@@ -203,8 +203,8 @@ LANDSAT_47_C2_L2_SRCloudQA:
         |-------|-------------------------|------------------------------|
         | 0     | DDV                     | Dark Dense Vegetation (DDV)  |
         | 1     | Cloud                   | Cloud                        |
-        | 2     | Cloud shadow            | Cloud Shadow                 |
-        | 3     | Adjacent to cloud       | Adjacent to cloud            |
+        | 2     | Cloud Shadow            | Cloud Shadow                 |
+        | 3     | Adjacent to Cloud       | Adjacent to cloud            |
         | 4     | Snow                    | Snow                         |
         | 5     | Water                   | Water                        |
         | 6-7   | Unused                  | Unused                       |
@@ -223,9 +223,9 @@ LANDSAT_47_C2_L2_SRCloudQA:
         - 0
         Cloud:
         - 1
-        Cloud shadow:
+        Cloud Shadow:
         - 2
-        Adjacent to cloud:
+        Adjacent to Cloud:
         - 3
         Snow:
         - 4
