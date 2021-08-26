@@ -19,6 +19,10 @@ qa_array = np.array([[8,8,8],
 
 all_product_identifiers = list_products(sensor='all')
 
+def test_product_ids_are_unique():
+    """No duplicate product identifers"""
+    assert len(all_product_identifiers) == len(set(all_product_identifiers))
+
 @pytest.mark.parametrize('product', all_product_identifiers)
 def test_qa_flag_list(product):
     """Lists of flags should be available for each product"""
