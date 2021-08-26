@@ -7,8 +7,10 @@ from pyUnpackQA import (unpack_to_array,
                         list_qa_flags
                         )
 
+from pyUnpackQA.product_loader import all_products
+
 """
-Just iterating thru all products as integration tests.
+Validating product definitions.
 """
 
 qa_array = np.array([[8,8,8],
@@ -23,98 +25,81 @@ def test_qa_flag_list(product):
     flags = list_qa_flags(product = product)
     assert len(flags) > 0
 
-@pytest.mark.parametrize('product', all_product_identifiers)
-def test_unpack_array_shape(product):
-    """ 
-    With >1 flag unpack_to_array result should match the input shape and have
-    a new axis at position (-1) with the same length as number of flags.
-    """
-    n_flags = len(list_qa_flags(product = product))
-    target_shape = qa_array.shape + (n_flags,)
-    
-    result = unpack_to_array(qa_array, product = product)
-    assert result.shape == target_shape
+
+"""
+Several tests for flag info format. 
+Within product_info the 'flag_info' entry
+should be a dictonary with key value pairs:
+    'flag name':[bit0,bit1,..]    
+Where flag name is a str, with a value of a list. List entries
+are non-negative ints.
+"""
 
 @pytest.mark.parametrize('product', all_product_identifiers)
-def test_single_flag_array_shape(product):
-    """
-    A single flag should return an array the same shape as the input and
-    *not* have an added axis.
-    """
-    flags = list_qa_flags(product = product)
-    flags = [flags[0]]
-    result = unpack_to_array(qa_array, product = product, flags=flags)
-    
-    assert result.shape == qa_array.shape
+def test_flag_info_is_dict(product):
+    """Flag info entry should be dictonary"""
+    product_info = all_products[product]
+    assert isinstance(product_info['flag_info'], dict)
 
 @pytest.mark.parametrize('product', all_product_identifiers)
-def test_unpack_dict_shape(product):
-    """Each dictionary value in unpack_to_dick should match the input qa shape"""
-    flags = list_qa_flags(product = product)
-    target_shape = qa_array.shape
-    
-    result = unpack_to_dict(qa_array, product = product, flags='all')
-    
-    all_shapes_good = [result[flag].shape == target_shape for flag in flags]
-    assert all(all_shapes_good)
+def test_flag_info_bit_list_non_empty(product):
+    """Bit entries for each flag a non-empty lists"""
+    product_info = all_products[product]
+    flags_valid = []
+    for flag_name, bits in product_info['flag_info'].items():
+        flags_valid.append(isinstance(bits, list) and len(bits) > 0)
+    assert all(flags_valid)
 
 @pytest.mark.parametrize('product', all_product_identifiers)
-def test_unpack_dict_all_flags(product):
-    """ The all flag indicator returns all available flags"""
-    flags = list_qa_flags(product = product)
-    
-    result = unpack_to_dict(qa_array, product = product, flags='all')
-    all_flags_in_result = [f in result for f in flags]
-    all_results_in_flags = [f in flags for f in result.keys()]
-    assert all(all_flags_in_result) and all(all_results_in_flags)
-    
-@pytest.mark.parametrize('product', all_product_identifiers)
-def test_unpack_dict_2_flags1(product):
-    """ Get the first and last flag only. """
-    flags = list_qa_flags(product = product)
-    flags = [flags[0], flags[-1]]
-    
-    result = unpack_to_dict(qa_array, product = product, flags=flags)
-    all_flags_in_result = [f in result for f in flags]
-    all_results_in_flags = [f in flags for f in result.keys()]
-    assert all(all_flags_in_result) and all(all_results_in_flags)
+def test_flag_info_bits_non_neg_ints(product):
+    """Bits within each list should be non-negative integers"""
+    product_info = all_products[product]
+    flags_valid = []
+    for flag_name, bits in product_info['flag_info'].items():
+        bits_non_neg = all([b >=0 for b in bits])
+        bits_values_are_ints = all([isinstance(b,int) for b in bits])
+        flags_valid.append(bits_non_neg and bits_values_are_ints)
+    assert all(flags_valid)
 
 @pytest.mark.parametrize('product', all_product_identifiers)
-def test_unpack_dict_2_flags2(product):
-    """ Get the first flag only. """
-    flags = list_qa_flags(product = product)
-    flags = [flags[0]]
-    
-    result = unpack_to_dict(qa_array, product = product, flags=flags)
-    all_flags_in_result = [f in result for f in flags]
-    all_results_in_flags = [f in flags for f in result.keys()]
-    assert all(all_flags_in_result) and all(all_results_in_flags)
+def test_flag_info_flag_is_str(product):
+    """The key values within 'flag_info' should be strings"""
+    product_info = all_products[product]
+    flags_valid = []
+    for flag_name, bits in product_info['flag_info'].items():
+        flags_valid.append(isinstance(flag_name,str))
+    assert all(flags_valid)
+
+"""
+Various tests for bit values
+"""
 
 @pytest.mark.parametrize('product', all_product_identifiers)
-def test_flag_wrong_axis_ordering(product):
-    """
-    Ordering of the flag axis is the same as the flag list. 
-    When the flag list is reversed, the resulting arrays should not match.
-    """
-    flags = list_qa_flags(product = product)
+def test_bits_are_only_used_once(product):
+    """Bits should not be listed twice"""
+    product_info = all_products[product]
+    all_listed_bits = []
+    for flag_name, bits in product_info['flag_info'].items():
+        all_listed_bits.extend(bits)
+        
+    assert len(set(all_listed_bits)) == len(all_listed_bits)
     
-    mask1 = unpack_to_array(qa_array, product=product, flags=flags)
-    flags.reverse()
-    mask2 = unpack_to_array(qa_array, product=product, flags=flags)
-    
-    assert not (mask1 == mask2).all()
+@pytest.mark.parametrize('product', all_product_identifiers)
+def test_bits_match_max_value(product):
+    """The largest bit should be < the max integer value"""
+    product_info = all_products[product]
+    all_listed_bits = []
+    for flag_name, bits in product_info['flag_info'].items():
+        all_listed_bits.extend(bits)
+        
+    assert 2**max(all_listed_bits) < product_info['max_value']
 
 @pytest.mark.parametrize('product', all_product_identifiers)
-def test_flag_correct_axis_ordering(product):
-    """
-    Ordering of the flag axis is the same as the flag list. 
-    When the flag list is reversed, the resulting arrays should not match.
-    But should match when the axis is flipped back again.
-    """
-    flags = list_qa_flags(product = product)
-    
-    mask1 = unpack_to_array(qa_array, product=product, flags=flags)
-    flags.reverse()
-    mask2 = unpack_to_array(qa_array, product=product, flags=flags)
-    
-    assert (mask1 == np.flip(mask2, axis=-1)).all()
+def test_bits_are_ordered(product):
+    """Bits should be listed smallest to largest"""
+    product_info = all_products[product]
+    all_listed_bits = []
+    for flag_name, bits in product_info['flag_info'].items():
+        all_listed_bits.extend(bits)
+        
+    assert all_listed_bits == sorted(all_listed_bits)
