@@ -304,10 +304,11 @@
               
                 
                 
-                <h1 id="pyunpackqa">pyUnpackQA</h1>
-<p>Methods for unpacking and labelling all common remote sensing QA bands which are stored in bit-wise values.  </p>
+                <h1 id="pyunpackqa">pyUnpackQA <a href="https://github.com/sdtaylor/pyUnpackQA/actions/workflows/test-package.yml"><img alt="test-package" src="https://github.com/sdtaylor/pyUnpackQA/actions/workflows/test-package.yml/badge.svg" /></a></h1>
+<p>Methods for unpacking, labelling, and masking for all common remote sensing QA bands which are stored in bit-wise values.  </p>
 <ul>
 <li>Works with single QA values, 1D arrays (eg. time series), or 2D arrays (eg. full scenes).  </li>
+<li>Get a QA mask in a single line of code: <code>pyunpackQA.unpack_to_array(qa,'LANDSAT_8_C2_L2_QAPixel','Cloud')</code></li>
 <li>The same methods are used for all sensors, with specific product flags specified via arguments.  </li>
 <li>No file reading or writing, everything is handled as pre-loaded arrays.  </li>
 <li>Requires python 3.6+, with numpy and pyyaml as the only dependencies.  </li>
