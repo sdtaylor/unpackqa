@@ -29,3 +29,83 @@ https://lpdaac.usgs.gov/products/mod13q1v006/
 ### Confirmed products  
 - Google Earth Engine: MODIS/006/MOD13Q1    
 
+## MODIS Collection 6 LAI/FPAR Products FparLAI_QC
+
+**Product Identifer**: `MODIS_LAIV6_FparLAI_QC`
+
+### Details  
+The MODIS Leaf Area Index (LAI) and Fraction of Photosynthetically Active Radiation (FPAR).   
+  
+This and `MODIS_LAIV6_FparExtra_QC` both compliment each other.    
+  
+There are several MODIS LAI/FPAR products which all use the same algorithms and resulting QA info.  
+  
+- MOD15A2H - Terra/500m/8day  
+- MYD15A2H - Aqua/500m/8day  
+- MCD15A2H - Terra+Aqua/500m/8day  
+- MCD15A3H - Terra+Aqua/500m/4day  
+  
+Two recent versions, v006 and v0061, also have identical QA info for all 4 products.  
+  
+### Flag Descriptions  
+  
+| Bits  | Flag Name      | Descriptions                |  
+|-------|---------------|------------------------------|  
+| 0     | MODLAND_QC    | 0 - Good quality (main algorithm with or without saturation)<br>1 - Other quality (back−up algorithm fill values) |  
+| 1     | Sensor        | 0 - Terra<br>1 - Aqua |  
+| 2     | Dead Detector | 0 - Detectors apparently fine for up to 50% of channels 1, 2<br>1 - Dead detectors caused >50% adjacent detector retrieval    |  
+| 3-4   | Cloud State   | 0 - Significant clouds NOT present (clear)<br>1 - Significant clouds WERE present<br>2 - Mixed cloud present in pixel<br>3 - Cloud state not defined, assumed clear  |  
+| 5-7   | SCF_QC        | Five−level confidence score<br>0 - Main (RT) method used with no saturation, best result possible<br>1 - Main (RT) method used with saturation, good and very usable<br> 2 - Main (RT) method failed due to bad geometry, empirical algorithm used<br>3 - Main (RT) method failed due to problems other than geometry, empirical algorithm used<br>4 - Pixel not produced at all, value couldn't be retrieved (possible reasons: bad L1B data, unusable MOD09GA data)<br>|  
+  
+### References docs   
+MODIS Collection 6 (C6) LAI/FPAR Product User’s Guide (April 21, 2020)  
+MODIS Collection 6.1 (C6.1) LAI/FPAR Product User’s Guide (April 21, 2021)  
+  
+### Confirmed products  
+- Google Earth Engine: MODIS/006/MCD15A3H  
+- EarthExplorer MCD15A2H V6   
+- EarthExplorer MCD15A3H V6   
+- EarthExplorer MOD15A2H V6   
+- EarthExplorer MYD15A2H V6   
+
+## MODIS Collection 6 LAI/FPAR Products FparExtra_QC
+
+**Product Identifer**: `MODIS_LaiFparV6_FparExtra_QC`
+
+### Details  
+The MODIS Leaf Area Index (LAI) and Fraction of Photosynthetically Active Radiation (FPAR).   
+  
+This and `MODIS_LAIV6_FparLAI_QC` both compliment each other.    
+  
+There are several MODIS LAI/FPAR products which all use the same algorithms and resulting QA/QC info.  
+  
+- MOD15A2H - Terra/500m/8day  
+- MYD15A2H - Aqua/500m/8day  
+- MCD15A2H - Terra+Aqua/500m/8day  
+- MCD15A3H - Terra+Aqua/500m/4day  
+  
+Two recent versions, v006 and v0061, also have identical QA info for all 4 products.  
+  
+### Flag Descriptions  
+  
+| Bits | Flag Name          | Description                                                                                      |  
+|------|--------------------|--------------------------------------------------------------------------------------------------|  
+| 0-1  | LandSea            | 0 - LAND<br>1 - SHORE<br>2 - FRESHWATER<br>3 - OCEAN                                             |  
+| 2    | Snow_Ice           | 0 - No snow/ice detected<br>1 - Snow/ice deteced                                                 |  
+| 3    | Aerosol            | 0 - No or low atmospheric aerosol levels detected<br>1 - Average or high aerosol levels detected |  
+| 4    | Cirrus             | 0 - No cirrus detected<br>1 - Cirrus was detected                                                |  
+| 5    | Internal_CloudMask | 0 - No clouds<br>1 - Clouds were detected                                                        |  
+| 6    | Cloud_Shadow       | 0 - No cloud shadow detected<br>1 - Cloud shadow detected                                        |  
+| 7    | SCF_Biome_Mask     | 0 - Biome outside interval<br>1 - Biome in interval                                              |  
+      
+### References docs   
+MODIS Collection 6 (C6) LAI/FPAR Product User’s Guide (April 21, 2020)  
+MODIS Collection 6.1 (C6.1) LAI/FPAR Product User’s Guide (April 21, 2021)  
+  
+### Confirmed products  
+- Google Earth Engine: MODIS/006/MCD15A3H  
+- EarthExplorer MCD15A2H V6   
+- EarthExplorer MCD15A3H V6   
+- EarthExplorer MOD15A2H V6   
+- EarthExplorer MYD15A2H V6   
+
