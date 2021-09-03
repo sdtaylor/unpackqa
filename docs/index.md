@@ -1,4 +1,4 @@
-# pyUnpackQA [![test-package](https://github.com/sdtaylor/pyUnpackQA/actions/workflows/test-package.yml/badge.svg)](https://github.com/sdtaylor/pyUnpackQA/actions/workflows/test-package.yml) 
+# unpackqa [![test-package](https://github.com/sdtaylor/unpackqa/actions/workflows/test-package.yml/badge.svg)](https://github.com/sdtaylor/unpackqa/actions/workflows/test-package.yml) 
 Methods for unpacking, labelling, and masking for all common remote sensing QA bands which are stored in bit-wise values.  
 
 - Works with single QA values, 1D arrays (eg. time series), or 2D arrays (eg. full scenes).  
@@ -12,6 +12,6 @@ Methods for unpacking, labelling, and masking for all common remote sensing QA b
 Install via pip directly from the github repo:
 
 ```
-pip install git+git://github.com/sdtaylor/pyUnpackQA
+pip install git+git://github.com/sdtaylor/unpackqa
 ```
 
