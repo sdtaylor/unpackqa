@@ -10,15 +10,15 @@ MOD13Q1v006_DetailedQA:
         
         | Bits  | Flag Name                  | Descriptions                                                                                                                                                                                                                                                                                                      |
         |-------|----------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-        | 0-1  | VI Quality    | 0 - VI produced with good quality  <br/>1 - VI produced, but check other QA  <br/>2 - Pixel produced, but most probably cloudy  <br/>3 - Pixel not produced due to other reasons than clouds                                                                                                                                  |
-        | 2-5  | VI Usefulness | 0 - Highest quality <br/>1 - Lower quality  <br/>2 - Decreasing quality  <br/>3 - Decreasing quality  <br/>4 - Decreasing quality  <br/>5 - Decreasing quality  <br/>6 - Decreasing quality  <br/>7 - Lowest quality  <br/>8 - Quality so low that it is not useful  <br/>9 - L1B data faulty  <br/>10 - Not useful for any other reason/not processed   |
-        | 6-7   | Aerosol Quantity           | 0 - Climatology <br/>1 - Low <br/>2 - Intermediate <br/>3 - High                                                                                                                                                                                                                                                                 |
-        | 8     | Adjacent cloud detected    | 0 - No <br/>1 - Yes                                                                                                                                                                                                                                                                                                    |
-        | 9     | Atmosphere BRDF Correction | 0 - No <br/>1 - Yes                                                                                                                                                                                                                                                                                                    |
-        | 10    | Mixed Clouds               | 0 - No <br/>1 - Yes                                                                                                                                                                                                                                                                                                    |
-        | 11-13 | Land/Water Mask            | 0 - Shallow ocean <br/>1 - Land (Nothing else but land) <br/>2 - Ocean coastlines and lake shorelines <br/>3 - Shallow inland water <br/>4 - Ephemeral water <br/>5 - Deep inland water <br/>6 - Moderate or continental ocean <br/>7 - Deep ocean                                                                                                   |
-        | 14    | Possible snow/ice          | 0 - No <br/>1 - Yes                                                                                                                                                                                                                                                                                                    |
-        | 15    | Possible shadow            | 0 - No <br/>1 - Yes                                                                                                                                                                                                                                                                                                    |
+        | 0-1   | VI_Quality     | 0 - VI produced with good quality  <br/>1 - VI produced, but check other QA  <br/>2 - Pixel produced, but most probably cloudy  <br/>3 - Pixel not produced due to other reasons than clouds                                                                                                                                  |
+        | 2-5   | VI_Usefulness  | 0 - Highest quality <br/>1 - Lower quality  <br/>2 - Decreasing quality  <br/>3 - Decreasing quality  <br/>4 - Decreasing quality  <br/>5 - Decreasing quality  <br/>6 - Decreasing quality  <br/>7 - Lowest quality  <br/>8 - Quality so low that it is not useful  <br/>9 - L1B data faulty  <br/>10 - Not useful for any other reason/not processed   |
+        | 6-7   | Aerosol_Quantity           | 0 - Climatology <br/>1 - Low <br/>2 - Intermediate <br/>3 - High                                                                                                                                                                                                                                                                 |
+        | 8     | Adjacent_cloud_detected    | 0 - No <br/>1 - Yes                                                                                                                                                                                                                                                                                                    |
+        | 9     | Atmosphere_BRDF_Correction | 0 - No <br/>1 - Yes                                                                                                                                                                                                                                                                                                    |
+        | 10    | Mixed_Clouds               | 0 - No <br/>1 - Yes                                                                                                                                                                                                                                                                                                    |
+        | 11-13 | Land_Water_Mask            | 0 - Shallow ocean <br/>1 - Land (Nothing else but land) <br/>2 - Ocean coastlines and lake shorelines <br/>3 - Shallow inland water <br/>4 - Ephemeral water <br/>5 - Deep inland water <br/>6 - Moderate or continental ocean <br/>7 - Deep ocean                                                                                                   |
+        | 14    | Possible_snow_ice          | 0 - No <br/>1 - Yes                                                                                                                                                                                                                                                                                                    |
+        | 15    | Possible_shadow            | 0 - No <br/>1 - Yes                                                                                                                                                                                                                                                                                                    |
 
     
         ### References docs 
@@ -29,30 +29,30 @@ MOD13Q1v006_DetailedQA:
         - Google Earth Engine: MODIS/006/MOD13Q1  
     
     flag_info:
-        VI Quality:
+        VI_Quality:
         - 0
         - 1
-        VI Usefulness:
+        VI_Usefulness:
         - 2
         - 3
         - 4
         - 5
-        Aerosol Quantity:
+        Aerosol_Quantity:
         - 6
         - 7
-        Adjacent cloud detected:
+        Adjacent_cloud_detected:
         - 8
-        Atmosphere BRDF Correction:
+        Atmosphere_BRDF_Correction:
         - 9
-        Mixed Clouds:
+        Mixed_Clouds:
         - 10
-        Land/Water Mask:
+        Land_Water_Mask:
         - 11
         - 12
         - 13
-        Possible snow/ice:
+        Possible_snow_ice:
         - 14
-        Possible shadow:
+        Possible_shadow:
         - 15
         
     max_value: 65535
@@ -77,13 +77,13 @@ MODIS_LAIV6_FparLAI_QC:
         
         ### Flag Descriptions
         
-        | Bits  | Flag Name      | Descriptions                |
-        |-------|---------------|------------------------------|
-        | 0     | MODLAND_QC    | 0 - Good quality (main algorithm with or without saturation)<br>1 - Other quality (back−up algorithm fill values) |
-        | 1     | Sensor        | 0 - Terra<br>1 - Aqua |
-        | 2     | Dead Detector | 0 - Detectors apparently fine for up to 50% of channels 1, 2<br>1 - Dead detectors caused >50% adjacent detector retrieval    |
-        | 3-4   | Cloud State   | 0 - Significant clouds NOT present (clear)<br>1 - Significant clouds WERE present<br>2 - Mixed cloud present in pixel<br>3 - Cloud state not defined, assumed clear  |
-        | 5-7   | SCF_QC        | Five−level confidence score<br>0 - Main (RT) method used with no saturation, best result possible<br>1 - Main (RT) method used with saturation, good and very usable<br> 2 - Main (RT) method failed due to bad geometry, empirical algorithm used<br>3 - Main (RT) method failed due to problems other than geometry, empirical algorithm used<br>4 - Pixel not produced at all, value couldn't be retrieved (possible reasons: bad L1B data, unusable MOD09GA data)<br>|
+        | Bits  | Flag Name       | Descriptions                |
+        |-------|-----------------|------------------------------|
+        | 0     | MODLAND_QC      | 0 - Good quality (main algorithm with or without saturation)<br>1 - Other quality (back−up algorithm fill values) |
+        | 1     | Sensor          | 0 - Terra<br>1 - Aqua |
+        | 2     | Dead_Detector   | 0 - Detectors apparently fine for up to 50% of channels 1, 2<br>1 - Dead detectors caused >50% adjacent detector retrieval    |
+        | 3-4   | Cloud_State     | 0 - Significant clouds NOT present (clear)<br>1 - Significant clouds WERE present<br>2 - Mixed cloud present in pixel<br>3 - Cloud state not defined, assumed clear  |
+        | 5-7   | SCF_QC          | Five−level confidence score<br>0 - Main (RT) method used with no saturation, best result possible<br>1 - Main (RT) method used with saturation, good and very usable<br> 2 - Main (RT) method failed due to bad geometry, empirical algorithm used<br>3 - Main (RT) method failed due to problems other than geometry, empirical algorithm used<br>4 - Pixel not produced at all, value couldn't be retrieved (possible reasons: bad L1B data, unusable MOD09GA data)<br>|
 
         ### References docs 
         MODIS Collection 6 (C6) LAI/FPAR Product User’s Guide (April 21, 2020)
@@ -101,9 +101,9 @@ MODIS_LAIV6_FparLAI_QC:
         - 0
         Sensor:
         - 1
-        Dead Detector:
+        Dead_Detector:
         - 2
-        Cloud State:
+        Cloud_State:
         - 3
         - 4
         SCF_QC:

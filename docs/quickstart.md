@@ -14,17 +14,17 @@ from pyUnpackQA
 pyUnpackQA.list_qa_flags('LANDSAT_8_C2_L2_QAPixel')
 
 ['Fill',
- 'Dilated Cloud',
+ 'Dilated_Cloud',
  'Cirrus',
  'Cloud',
- 'Cloud Shadow',
+ 'Cloud_Shadow',
  'Snow',
  'Clear',
  'Water',
- 'Cloud Confidence',
- 'Cloud Shadow Confidence',
- 'Snow/Ice Confidence',
- 'Cirrus Confidence']
+ 'Cloud_Confidence',
+ 'Cloud_Shadow_Confidence',
+ 'Snow_Ice_Confidence',
+ 'Cirrus_Confidence']
 ```
 
 ## Unpacking to an array
@@ -50,17 +50,17 @@ This is similar to `unpack_to_array`, but instead of a stacked array for all fla
 qa_array = np.array([56598, 56598,0,0,56598])
 pyUnpackQA.unpack_to_dict(qa_array, product='LANDSAT_8_C2_L2_QAPixel')
 {'Fill': array([0, 0, 0, 0, 0], dtype=uint8),
- 'Dilated Cloud': array([1, 1, 0, 0, 1], dtype=uint8),
+ 'Dilated_Cloud': array([1, 1, 0, 0, 1], dtype=uint8),
  'Cirrus': array([1, 1, 0, 0, 1], dtype=uint8),
  'Cloud': array([0, 0, 0, 0, 0], dtype=uint8),
- 'Cloud Shadow': array([1, 1, 0, 0, 1], dtype=uint8),
+ 'Cloud_Shadow': array([1, 1, 0, 0, 1], dtype=uint8),
  'Snow': array([0, 0, 0, 0, 0], dtype=uint8),
  'Clear': array([0, 0, 0, 0, 0], dtype=uint8),
  'Water': array([0, 0, 0, 0, 0], dtype=uint8),
- 'Cloud Confidence': array([1, 1, 0, 0, 1], dtype=uint8),
- 'Cloud Shadow Confidence': array([3, 3, 0, 0, 3], dtype=uint8),
- 'Snow/Ice Confidence': array([1, 1, 0, 0, 1], dtype=uint8),
- 'Cirrus Confidence': array([3, 3, 0, 0, 3], dtype=uint8)}
+ 'Cloud_Confidence': array([1, 1, 0, 0, 1], dtype=uint8),
+ 'Cloud_Shadow_Confidence': array([3, 3, 0, 0, 3], dtype=uint8),
+ 'Snow_Ice_Confidence': array([1, 1, 0, 0, 1], dtype=uint8),
+ 'Cirrus_Confidence': array([3, 3, 0, 0, 3], dtype=uint8)}
 
 pyUnpackQA.unpack_to_dict(qa_array, product='LANDSAT_8_C2_L2_QAPixel')['Cloud'].shape
 (5,)

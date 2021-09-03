@@ -13,17 +13,17 @@ from pyUnpackQA import (unpack_to_array,
 l8_test_values1 =         [1, 21824, 21826, 21888, 21890, 22080, 22144, 22280, 23888, 23952]
 l8_flag_values1 = \
  {'Fill' :                [1,      0,     0,     0,    0,      0,     0,     0,     0,    0],
-'Dilated Cloud' :         [0,      0,     1,     0,    1,      0,     0,     0,     0,    0],
+'Dilated_Cloud' :         [0,      0,     1,     0,    1,      0,     0,     0,     0,    0],
 'Cirrus' :                [0,      0,     0,     0,    0,      0,     0,     0,     0,    0],
 'Cloud' :                 [0,      0,     0,     0,    0,      0,     0,     1,     0,    0],
-'Cloud Shadow' :          [0,      0,     0,     0,    0,      0,     0,     0,     1,    1],
+'Cloud_Shadow' :          [0,      0,     0,     0,    0,      0,     0,     0,     1,    1],
 'Snow' :                  [0,      0,     0,     0,    0,      0,     0,     0,     0,    0],
 'Clear' :                 [0,      1,     1,     0,    0,      1,     0,     0,     1,    0],
 'Water' :                 [0,      0,     0,     1,    1,      0,     1,     0,     0,    1],
-'Cloud Confidence' :      [0,      1,     1,     1,    1,      2,     2,     3,     1,    1],
-'Cloud Shadow Confidence':[0,      1,     1,     1,    1,      1,     1,     1,     3,    3],
-'Snow/Ice Confidence' :   [0,      1,     1,     1,    1,      1,     1,     1,     1,    1],
-'Cirrus Confidence' :     [0,      1,     1,     1,    1,      1,     1,     1,     1,    1]}
+'Cloud_Confidence' :      [0,      1,     1,     1,    1,      2,     2,     3,     1,    1],
+'Cloud_Shadow_Confidence':[0,      1,     1,     1,    1,      1,     1,     1,     3,    3],
+'Snow_Ice_Confidence' :   [0,      1,     1,     1,    1,      1,     1,     1,     1,    1],
+'Cirrus_Confidence' :     [0,      1,     1,     1,    1,      1,     1,     1,     1,    1]}
  
  
 # take the lists above, which are easy to write down and form, and convert
@@ -41,8 +41,8 @@ l47_test_values =   [0, 1, 2, 4, 8, 9, 12, 16, 20, 24, 32, 34, 36, 40, 48, 52, 5
 l47_flag_values = \
 {'DDV' :            [0, 1, 0, 0, 0, 1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
 'Cloud' :           [0, 0, 1, 0, 0, 0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0],
-'Cloud Shadow' :    [0, 0, 0, 1, 0, 0,  1,  0,  1,  0,  0,  0,  1,  0,  0,  1,  0],
-'Adjacent to Cloud':[0, 0, 0, 0, 1, 1,  1,  0,  0,  1,  0,  0,  0,  1,  0,  0,  1],
+'Cloud_Shadow' :    [0, 0, 0, 1, 0, 0,  1,  0,  1,  0,  0,  0,  1,  0,  0,  1,  0],
+'Adjacent_to_Cloud':[0, 0, 0, 0, 1, 1,  1,  0,  0,  1,  0,  0,  0,  1,  0,  0,  1],
 'Snow' :            [0, 0, 0, 0, 0, 0,  0,  1,  1,  1,  0,  0,  0,  0,  1,  1,  1],
 'Water' :           [0, 0, 0, 0, 0, 0,  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,  1]}
 
