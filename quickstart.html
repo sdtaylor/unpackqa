@@ -14,7 +14,7 @@
     
     
       
-        <title>Quickstart - pyUnpackQA</title>
+        <title>Quickstart - unpackqa</title>
       
     
     
@@ -74,7 +74,7 @@
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="index.html" title="pyUnpackQA" class="md-header__button md-logo" aria-label="pyUnpackQA" data-md-component="logo">
+    <a href="index.html" title="unpackqa" class="md-header__button md-logo" aria-label="unpackqa" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -87,7 +87,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            pyUnpackQA
+            unpackqa
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -124,13 +124,13 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="index.html" title="pyUnpackQA" class="md-nav__button md-logo" aria-label="pyUnpackQA" data-md-component="logo">
+    <a href="index.html" title="unpackqa" class="md-nav__button md-logo" aria-label="unpackqa" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
 
     </a>
-    pyUnpackQA
+    unpackqa
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -311,7 +311,7 @@
   
   
     <li class="md-nav__item">
-      <a href="https://github.com/sdtaylor/pyUnpackQA" class="md-nav__link">
+      <a href="https://github.com/sdtaylor/unpackqa" class="md-nav__link">
         GitHub Repo
       </a>
     </li>
@@ -379,14 +379,14 @@
                 
                 <h1 id="quickstart">Quickstart</h1>
 <h2 id="listing-available-sensor-flags-and-products">Listing available sensor, flags, and products.</h2>
-<p><code>pyUnpackQA.list_sensors()</code>,<code>pyUnpackQA.list_products()</code><br />
+<p><code>unpackqa.list_sensors()</code>,<code>unpackqa.list_products()</code><br />
 These list the available sensors and sensor data products, respectively. By default they list everything configured in the package. </p>
-<p><code>pyUnpackQA.list_qa_flags()</code>
+<p><code>unpackqa.list_qa_flags()</code>
 This lists the flags which are parsed from the QA bits. These match the Flag Name column in the product description tables. A product name must be specified here. For example:</p>
 <pre><code>import numpy as np
-from pyUnpackQA
+import unpackqa
 
-pyUnpackQA.list_qa_flags('LANDSAT_8_C2_L2_QAPixel')
+unpackqa.list_qa_flags('LANDSAT_8_C2_L2_QAPixel')
 
 ['Fill',
  'Dilated_Cloud',
@@ -402,22 +402,22 @@ pyUnpackQA.list_qa_flags('LANDSAT_8_C2_L2_QAPixel')
  'Cirrus_Confidence']
 </code></pre>
 <h2 id="unpacking-to-an-array">Unpacking to an array</h2>
-<p><code>pyUnpackQA.unpack_to_array(qa, product='LANDSAT_8_C2_L2_QAPixel', flags='all')</code><br />
+<p><code>unpackqa.unpack_to_array(qa, product='LANDSAT_8_C2_L2_QAPixel', flags='all')</code><br />
 This will return the QA values of a numpy array or integer. The returned value will have an entry for all flags listed in the <code>flags</code> argument. By default <code>flags</code> is <code>all</code> which will return all flags listed in <code>list_qa_flags()</code>.</p>
-<pre><code>pyUnpackQA.unpack_to_array(21284, product='LANDSAT_8_C2_L2_QAPixel')
+<pre><code>unpackqa.unpack_to_array(21284, product='LANDSAT_8_C2_L2_QAPixel')
 array([[0, 0, 1, 0, 0, 1, 0, 0, 3, 0, 1, 1]], dtype=uint8)
 
 qa_array = np.array([[21284,0],[21284,0]])
 qa_array.shape
 (2,2)
-pyUnpackQA.unpack_to_array(qa_array, product='LANDSAT_8_C2_L2_QAPixel').shape
+unpackqa.unpack_to_array(qa_array, product='LANDSAT_8_C2_L2_QAPixel').shape
 (2,2,12)
 </code></pre>
 <h2 id="unpacking-to-a-dictionary">Unpacking to a dictionary</h2>
-<p><code>pyUnpackQAunpack_to_dict(qa, product='LANDSAT_8_C2_L2_QAPixel', flags='all')</code><br />
+<p><code>unpackqa.unpack_to_dict(qa, product='LANDSAT_8_C2_L2_QAPixel', flags='all')</code><br />
 This is similar to <code>unpack_to_array</code>, but instead of a stacked array for all flags, it returns a dictionary where the keys are the flag names, and the value for each key is the flag array. The shape of each array is the same as the input qa.shape. This is usefull when single pixels or time series of pixels are being used, as this can be put directly into a pandas DataFrame.</p>
 <pre><code>qa_array = np.array([56598, 56598,0,0,56598])
-pyUnpackQA.unpack_to_dict(qa_array, product='LANDSAT_8_C2_L2_QAPixel')
+unpackqa.unpack_to_dict(qa_array, product='LANDSAT_8_C2_L2_QAPixel')
 {'Fill': array([0, 0, 0, 0, 0], dtype=uint8),
  'Dilated_Cloud': array([1, 1, 0, 0, 1], dtype=uint8),
  'Cirrus': array([1, 1, 0, 0, 1], dtype=uint8),
@@ -431,7 +431,7 @@ pyUnpackQA.unpack_to_dict(qa_array, product='LANDSAT_8_C2_L2_QAPixel')
  'Snow_Ice_Confidence': array([1, 1, 0, 0, 1], dtype=uint8),
  'Cirrus_Confidence': array([3, 3, 0, 0, 3], dtype=uint8)}
 
-pyUnpackQA.unpack_to_dict(qa_array, product='LANDSAT_8_C2_L2_QAPixel')['Cloud'].shape
+unpackqa.unpack_to_dict(qa_array, product='LANDSAT_8_C2_L2_QAPixel')['Cloud'].shape
 (5,)
 </code></pre>
                 
