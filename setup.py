@@ -27,5 +27,6 @@ setup(name=NAME,
       license=LICENSE,
       packages=[NAME],
       python_requires=REQUIRES_PYTHON,
+      install_requires=REQUIRED,
       include_package_data=True,
       zip_safe=False)
