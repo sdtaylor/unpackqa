@@ -6,7 +6,7 @@ These are from the 'description' entry of each product
 One file per sensor. Where within each file each product has a ## markdown heading.
 """
 
-from pyUnpackQA.product_loader import product_list_by_sensor
+from unpackqa.product_loader import product_list_by_sensor
 
 auto_generated_header = '<!-- this markdown file automatically generated. do not edit directly-->'
 

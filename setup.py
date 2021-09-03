@@ -1,9 +1,9 @@
 from setuptools import setup, find_packages
 
 # Package meta-data.
-NAME = 'pyUnpackQA'
+NAME = 'unpackqa'
 DESCRIPTION = 'QA bit unpacking for Landsat, MODIS, Sentinal, VIIRS, and more.'
-URL = 'https://github.com/sdtaylor/pyUnpackQA'
+URL = 'https://github.com/sdtaylor/unpackqa'
 AUTHOR = 'Shawn Taylor'
 LICENSE = 'MIT'
 REQUIRES_PYTHON = '>=3.6.0'
@@ -15,7 +15,7 @@ REQUIRED = [
 ]
 
 version = {}
-with open('pyUnpackQA/version.py') as fp:
+with open('unpackqa/version.py') as fp:
     exec(fp.read(), version)
 VERSION = version['__version__']
 
