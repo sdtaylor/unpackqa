@@ -12,13 +12,13 @@ You need the following to build the docs.
 `pip install mkdocs mkdocstrings pytkdocs[numpy-style] mkdocs-material'  
 
 ### Making updates to the product descriptions.
-These edits should made to the yaml files in `pyUnpackQA/product_files/` in the `description` entry. If you make an edit, run `render_product_markdown_files.py` to produce new markdown files in the `docs` folder, which will be picked up by mkdocs.
+These edits should made to the yaml files in `unpackqa/product_files/` in the `description` entry. If you make an edit, run `render_product_markdown_files.py` to produce new markdown files in the `docs` folder, which will be picked up by mkdocs.
 
 ### Making edits to any other docs
 You can edit everything else in `docs` directly.
 
 ### Seeing real time updates
-In a command window navigate to the pyUnpackQA directory and run `mkdocs serve` and in a browser navigate to `http://localhost:8000` to see the current site. Any changes you make to the text markdown files will be updated in the browser.   
+In a command window navigate to the unpackqa directory and run `mkdocs serve` and in a browser navigate to `http://localhost:8000` to see the current site. Any changes you make to the text markdown files will be updated in the browser.   
 This will not pickup any changes in the product yaml files. To see updates with those while `mkdocs serve` is running do the following:  
 1. Make yaml file edit in the `description` entry.
 2. Save the file.

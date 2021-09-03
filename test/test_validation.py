@@ -1,7 +1,7 @@
 import pytest
 import numpy as np
 
-from pyUnpackQA import unpack_to_array, unpack_to_dict
+from unpackqa import unpack_to_array, unpack_to_dict
 
 default_product = 'LANDSAT_8_C2_L2_QAPixel'
 

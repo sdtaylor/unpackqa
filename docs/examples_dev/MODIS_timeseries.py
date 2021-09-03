@@ -6,7 +6,7 @@ import numpy as np
 # ee.Authenticate()
 ee.Initialize()
 
-import pyUnpackQA
+import unpackqa
 
 
 # The MODIS vegetation product has a Summary QA band which has 4 values:
@@ -36,10 +36,10 @@ df = gee_subset(product    = 'MODIS/006/MOD13A1',
 df['NDVI'] = df.NDVI * 0.0001
 df = df[~df.NDVI.isna()].reset_index()
 
-# pyUnpackQA only works on integers. Here DetailedQA are 16-bits
+# unpackqa only works on integers. Here DetailedQA are 16-bits
 df['DetailedQA'] = df.DetailedQA.astype(np.uint16)
 
-expanded_detailed_qa = pyUnpackQA.unpack_to_dict(df.DetailedQA.values, product = 'MOD13Q1v006_DetailedQA', flags='all')
+expanded_detailed_qa = unpackqa.unpack_to_dict(df.DetailedQA.values, product = 'MOD13Q1v006_DetailedQA', flags='all')
 
 # This produces a dictionary where each key is a flag, and each value is an 
 # array the same length as the df data.frame

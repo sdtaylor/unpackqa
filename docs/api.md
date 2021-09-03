@@ -1,6 +1,6 @@
 # API Reference
 
-::: pyUnpackQA.unpack
+::: unpackqa.unpack
     selection:
         members:
             - unpack_to_array
@@ -11,7 +11,7 @@
       show_root_toc_entry: false
       show_source: false
 
-::: pyUnpackQA.product_loader
+::: unpackqa.product_loader
     selection:
         members:
             - list_sensors

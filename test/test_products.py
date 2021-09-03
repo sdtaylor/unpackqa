@@ -1,13 +1,13 @@
 import pytest
 import numpy as np
 
-from pyUnpackQA import (unpack_to_array,
+from unpackqa import (unpack_to_array,
                         unpack_to_dict, 
                         list_products,
                         list_qa_flags
                         )
 
-from pyUnpackQA.product_loader import all_products
+from unpackqa.product_loader import all_products
 
 """
 Validating product definitions.

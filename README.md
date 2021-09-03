@@ -1,4 +1,4 @@
-# pyUnpackQA [![test-package](https://github.com/sdtaylor/pyUnpackQA/actions/workflows/test-package.yml/badge.svg)](https://github.com/sdtaylor/pyUnpackQA/actions/workflows/test-package.yml) 
+# unpackqa [![test-package](https://github.com/sdtaylor/unpackqa/actions/workflows/test-package.yml/badge.svg)](https://github.com/sdtaylor/unpackqa/actions/workflows/test-package.yml) 
 Methods for unpacking, labelling and masking all common remote sensing QA bands which are stored in bit-wise values.  
 
 - Works with single QA values, 1D arrays (eg. time series), or 2D arrays (eg. full scenes).  
@@ -12,20 +12,20 @@ Methods for unpacking, labelling and masking all common remote sensing QA bands 
 Install via pip directly from the github repo:
 
 ```
-pip install git+git://github.com/sdtaylor/pyUnpackQA
+pip install git+git://github.com/sdtaylor/unpackqa
 ```
 
 ## Documentation
-[https://sdtaylor.github.io/pyUnpackQA](https://sdtaylor.github.io/pyUnpackQA)  
+[https://sdtaylor.github.io/unpackqa](https://sdtaylor.github.io/unpackqa)  
 
 ## Quickstart
 
 ```
 import numpy as np
-from pyUnpackQA import unpack_to_array
+from unpackqa import unpack_to_array
 
 # Specify the Landsat 8 Collection 2 Level 2 QA Pixel
-# see all identifiers in pyUnpackQA.list_products()
+# see all identifiers in unpackqa.list_products()
 l8_identifer = 'LANDSAT_8_C2_L2_QAPixel'
 
 qa_array = np.array([[21284,0],[21284,0]])
@@ -45,9 +45,9 @@ unpack_to_array(qa_array, product = l8_identifer).shape
 (2,2,12)
 
 # Masks for individual flags can also be obtained from a dictionary object
-from pyUnpackQA import unpack_to_dict
+from unpackqa import unpack_to_dict
 
-# See flags for each product with pyUnpackQA.list_qa_flags()
+# See flags for each product with unpackqa.list_qa_flags()
 flags = ['Cloud','Cloud Shadow']
 
 flag_masks = unpack_to_dict(qa_array, product = l8_identifer, flags=flags)
