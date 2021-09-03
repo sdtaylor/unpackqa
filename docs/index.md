@@ -9,9 +9,9 @@ Methods for unpacking, labelling, and masking for all common remote sensing QA b
 
 # Installation
 
-Install via pip directly from the github repo:
+Install via pip:
 
 ```
-pip install git+git://github.com/sdtaylor/unpackqa
+pip install unpackqa
 ```
 

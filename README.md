@@ -7,12 +7,12 @@ Methods for unpacking, labelling and masking all common remote sensing QA bands 
 - No file reading or writing, everything is handled as pre-loaded arrays.  
 - Requires python 3.6+, with numpy and pyyaml as the only dependencies.  
 
-## Installaion
+## Installation
 
-Install via pip directly from the github repo:
+Install via pip
 
 ```
-pip install git+git://github.com/sdtaylor/unpackqa
+pip install unpackqa
 ```
 
 ## Documentation
