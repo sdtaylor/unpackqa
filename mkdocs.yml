@@ -9,6 +9,7 @@ nav:
     - Products':
         - 'Landsat': 'Landsat.md'
         - 'MODIS': 'MODIS.md'
+        - 'Custom QA': 'custom_spec.md'
     - API Reference: 'api.md' 
     - 'GitHub Repo': 'https://github.com/sdtaylor/unpackqa'
 
