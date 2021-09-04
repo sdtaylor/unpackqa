@@ -24,11 +24,13 @@ def unpack_to_array(qa, product, flags='all'):
         The order of the mask axis in the returned array will be the same as
         the flag order specifed here. 
         
+        ```
         product_info = {'flag_info':{'flag1_description':[0],
                                      'flag2_description':[1],
                                      'flag3_description':[4,5]},
                         'max_value' : 255,
                         'num_bits'  : 8}
+        ```
         
     flags : list of strings or 'all', optional
         List of flags to return. If 'all', the default, then all available
@@ -78,12 +80,16 @@ def unpack_to_dict(qa, product, flags='all'):
         so is assumed unused. `max_value` is generally set to the maximum possible
         value given the bit size. If this option is used then the `flags` 
         argument can be left as the default `all`.  
+        The resulting dictionary key names will be the same as the flag
+        descriptions specified here.
         
+        ```
         product_info = {'flag_info':{'flag1_description':[0],
                                      'flag2_description':[1],
                                      'flag3_description':[4,5]},
                         'max_value' : 255,
                         'num_bits'  : 8}
+        ```
         
     flags : list of strings or 'all', optional
         List of flags to return. If 'all', the default, then all available
