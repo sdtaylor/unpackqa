@@ -79,6 +79,18 @@ invalid_test_cases = [
                   'flag3_description':[4,5]},
      'max_value' : 500,
      'num_bits'  : 8},
+
+    # missing num_bits
+    {'flag_info':{'flag1_description':[0],
+                  'flag2_description':[1],
+                  'flag3_description':[4,5]},
+     'max_value' : 500},
+
+    # missing max_value
+    {'flag_info':{'flag1_description':[0],
+                  'flag2_description':[1],
+                  'flag3_description':[4,5]},
+     'num_bits'  : 8},
     ]
 
 
