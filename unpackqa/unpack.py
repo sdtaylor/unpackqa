@@ -18,11 +18,11 @@ def unpack_to_array(qa, product, flags='all'):
         A custom bit flag specification may also be used via a dictionary.
         For example, below is an 8 bit qa flag where the 1st and 2nd flags are bits 0 and 1,
         and the 3rd flag is spread across bits 4 and 5. Note bit 3 is not specified
-        so is assumed unused. `max_value` is generally set to the maximum possible
+        so is ignored. `max_value` is generally set to the maximum possible
         value given the bit size. If this option is used then the `flags` 
         argument can be left as the default `all`.  
-        The order of the mask axis in the returned array will be the same as
-        the flag order specifed here. 
+        Flags should be ordered from lowest to highest bits. The order of the mask axis
+        in the returned array will be the same as the flag order specifed here. 
         
         ```
         product_info = {'flag_info':{'flag1_description':[0],
@@ -80,8 +80,8 @@ def unpack_to_dict(qa, product, flags='all'):
         so is assumed unused. `max_value` is generally set to the maximum possible
         value given the bit size. If this option is used then the `flags` 
         argument can be left as the default `all`.  
-        The resulting dictionary key names will be the same as the flag
-        descriptions specified here.
+        Flags should be ordered from lowest to highest bits. The resulting dictionary
+        key names will be the same as the flag descriptions specified here.
         
         ```
         product_info = {'flag_info':{'flag1_description':[0],
