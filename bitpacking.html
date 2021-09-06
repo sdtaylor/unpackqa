@@ -14,7 +14,7 @@
     
     
       
-        <title>Examples - unpackqa</title>
+        <title>QA/QC Bitpacking - unpackqa</title>
       
     
     
@@ -63,7 +63,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#examples" class="md-skip">
+        <a href="#qaqc-bitpacking-explained" class="md-skip">
           Skip to content
         </a>
       
@@ -93,7 +93,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Examples
+              QA/QC Bitpacking
             
           </span>
         </div>
@@ -171,11 +171,47 @@
 
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="bitpacking.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          QA/QC Bitpacking
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="bitpacking.html" class="md-nav__link md-nav__link--active">
         QA/QC Bitpacking
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#qaqc-bitpacking-explained" class="md-nav__link">
+    QA/QC Bitpacking Explained
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -186,21 +222,11 @@
 
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="examples.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="examples.html" class="md-nav__link">
         Examples
       </a>
-      
     </li>
   
 
@@ -317,8 +343,21 @@
   
   
   
-    
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#qaqc-bitpacking-explained" class="md-nav__link">
+    QA/QC Bitpacking Explained
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -331,11 +370,182 @@
               
                 
                 
-                <h1 id="examples">Examples</h1>
-<ul>
-<li><a href="examples/Landsat8_scene_masks.html" target="_blank">Making QA masks from a Landsat 8 scene</a></li>
-<li><a href="examples/MODIS_Time_Series.html" target="_blank">QA masks for MODIS NDVI time series from Google Earth Engine</a></li>
-</ul>
+                  <h1>QA/QC Bitpacking</h1>
+                
+                <h2 id="qaqc-bitpacking-explained">QA/QC Bitpacking Explained</h2>
+<p>Integers are stored in computer memory in binary format. Binary is a string of values which are either 0 or 1, with each place referred to as a "bit". The more bits in a binary string, the more information can be stored. A binary string of two bits can have the following four integer values:</p>
+<table>
+<thead>
+<tr>
+<th>Binary</th>
+<th>Integer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>00</td>
+<td>0</td>
+</tr>
+<tr>
+<td>01</td>
+<td>1</td>
+</tr>
+<tr>
+<td>10</td>
+<td>2</td>
+</tr>
+<tr>
+<td>11</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<p>A binary string of three bits can have the following eight integer values:</p>
+<table>
+<thead>
+<tr>
+<th>Binary</th>
+<th>Integer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>000</td>
+<td>0</td>
+</tr>
+<tr>
+<td>001</td>
+<td>1</td>
+</tr>
+<tr>
+<td>010</td>
+<td>2</td>
+</tr>
+<tr>
+<td>011</td>
+<td>3</td>
+</tr>
+<tr>
+<td>100</td>
+<td>4</td>
+</tr>
+<tr>
+<td>101</td>
+<td>5</td>
+</tr>
+<tr>
+<td>110</td>
+<td>6</td>
+</tr>
+<tr>
+<td>111</td>
+<td>7</td>
+</tr>
+</tbody>
+</table>
+<p>Thus, the maximum integer value is a function of the number of bits used, which is <code>(2^n)-1</code>, where <code>n</code> is the number of bits. Note that bits are read from right to left, and the bit "location" starts at 0. So the right-most bit is bit 0, the bit immediately to the left of that is bit 1, etc. Most QA/QC data will be either 8 or 16 bits. The above does not account for negative numbers, which are generally not seen in QA/QC data so are not explained here.  </p>
+<p>Each bit in a binary string can be thought of as a single flag which declares if a certain condition is present. For example the following describes the bit flags of the Landsat 4-7 Cloud Quality Assessment band.</p>
+<table>
+<thead>
+<tr>
+<th>Bit</th>
+<th>Flag Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Dark Dense Vegetation (DDV)</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Cloud</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Cloud Shadow</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Adjacent to cloud</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Snow</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Water</td>
+</tr>
+<tr>
+<td>6-7</td>
+<td>Unused</td>
+</tr>
+</tbody>
+</table>
+<p>This band has 8 bits, so is read as an 8-bit integer and has a maximum value of <code>(2^8)-1 = 255</code>. The following table has several examples of possible QA integer values, their corresponding flags, and the binary value.</p>
+<table>
+<thead>
+<tr>
+<th align="center">Pixel Value</th>
+<th align="center">DDV</th>
+<th align="center">Cloud</th>
+<th align="center">Cloud Shadow</th>
+<th align="center">Adjacent to cloud</th>
+<th align="center">Snow</th>
+<th align="center">Water</th>
+<th align="center">Description</th>
+<th align="center">Binary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">2</td>
+<td align="center">No</td>
+<td align="center">Yes</td>
+<td align="center">No</td>
+<td align="center">No</td>
+<td align="center">No</td>
+<td align="center">No</td>
+<td align="center">Pixel has a cloud</td>
+<td align="center">00000010</td>
+</tr>
+<tr>
+<td align="center">24</td>
+<td align="center">No</td>
+<td align="center">No</td>
+<td align="center">No</td>
+<td align="center">Yes</td>
+<td align="center">Yes</td>
+<td align="center">No</td>
+<td align="center">Pixel has snow and is adjacent to a cloud</td>
+<td align="center">00011000</td>
+</tr>
+<tr>
+<td align="center">36</td>
+<td align="center">No</td>
+<td align="center">No</td>
+<td align="center">Yes</td>
+<td align="center">No</td>
+<td align="center">No</td>
+<td align="center">Yes</td>
+<td align="center">Pixel includes water and a cloud shadow</td>
+<td align="center">00100100</td>
+</tr>
+<tr>
+<td align="center">5</td>
+<td align="center">Yes</td>
+<td align="center">No</td>
+<td align="center">Yes</td>
+<td align="center">No</td>
+<td align="center">No</td>
+<td align="center">No</td>
+<td align="center">Pixel had dark dense vegetation and a cloud shadow</td>
+<td align="center">00000101</td>
+</tr>
+</tbody>
+</table>
+<p>Any pixel can have multiple flags set. Thus to extract a single mask representing the "Cloud Shadow" flag, for example, would require finding values of 5, 36, and all other integers where bit 2 is set. The unpackqa package simplifies this process and makes querying one, or multiple, flags straightforward. </p>
                 
               
               
@@ -355,7 +565,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="bitpacking.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: QA/QC Bitpacking" rel="prev">
+        <a href="quickstart.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Quickstart" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -364,20 +574,20 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              QA/QC Bitpacking
+              Quickstart
             </div>
           </div>
         </a>
       
       
         
-        <a href="Landsat.html" class="md-footer__link md-footer__link--next" aria-label="Next: Landsat" rel="next">
+        <a href="examples.html" class="md-footer__link md-footer__link--next" aria-label="Next: Examples" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Landsat
+              Examples
             </div>
           </div>
           <div class="md-footer__button md-icon">
