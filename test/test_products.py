@@ -7,6 +7,20 @@ from unpackqa import (unpack_to_array,
                         list_qa_flags
                         )
 
+from unpackqa.tools.validation import (product_info_has_required_entries,
+                                       flag_info_is_non_empty_dict,
+                                       flag_info_bit_list_non_empty,
+                                       flag_info_bits_non_neg_ints,
+                                       flag_info_flag_is_str,
+                                       bits_are_only_used_once,
+                                       bits_are_reasonable,
+                                       bits_do_not_exceed_bit_size,
+                                       max_value_matches_num_bits,
+                                       bits_are_ordered,
+                                       )
+
+from unpackqa.tools.validation import InvalidProductSpec
+
 from unpackqa.product_loader import all_products
 
 """
@@ -28,82 +42,53 @@ def test_qa_flag_list(product):
     """Lists of flags should be available for each product"""
     flags = list_qa_flags(product = product)
     assert len(flags) > 0
+    
+@pytest.mark.parametrize('product', all_product_identifiers)
+def test_product_info_is_dict(product):
+    """product_info entry should be dictonary"""
+    product_info = all_products[product]
+    assert isinstance(product_info, dict)
 
 
 """
-Several tests for flag info format. 
+Several tests for all products configred within the package.
 Within product_info the 'flag_info' entry
 should be a dictonary with key value pairs:
     'flag name':[bit0,bit1,..]    
 Where flag name is a str, with a value of a list. List entries
 are non-negative ints.
+
+These same tests are used to validate user passed custom specifications, so
+instead of essentially writing a new test function for each, just iterate 
+over them and create some informative output if 1 or more fails.
 """
 
-@pytest.mark.parametrize('product', all_product_identifiers)
-def test_flag_info_is_dict(product):
-    """Flag info entry should be dictonary"""
-    product_info = all_products[product]
-    assert isinstance(product_info['flag_info'], dict)
+test_list = [('product info does not have required entries',product_info_has_required_entries),
+             ('flag_info is not dictionary, or is empty', flag_info_is_non_empty_dict),
+             ('flag_info has empty lists',flag_info_bit_list_non_empty),
+             ('flag_info has negative and/or non-int values',flag_info_bits_non_neg_ints),
+             ('flag_info keys are not strings',flag_info_flag_is_str),
+             ('duplicate bits detected',bits_are_only_used_once),
+             ('bits are larger than needed for even a 32 bit int', bits_are_reasonable),
+             ('largest bit is greater than num_bits',bits_do_not_exceed_bit_size),
+             ('max_value is >=  2**num_bits',max_value_matches_num_bits),
+             ('bits are out of order',bits_are_ordered),
+             ]
 
 @pytest.mark.parametrize('product', all_product_identifiers)
-def test_flag_info_bit_list_non_empty(product):
-    """Bit entries for each flag a non-empty lists"""
+def test_product_info(product):
     product_info = all_products[product]
-    flags_valid = []
-    for flag_name, bits in product_info['flag_info'].items():
-        flags_valid.append(isinstance(bits, list) and len(bits) > 0)
-    assert all(flags_valid)
-
-@pytest.mark.parametrize('product', all_product_identifiers)
-def test_flag_info_bits_non_neg_ints(product):
-    """Bits within each list should be non-negative integers"""
-    product_info = all_products[product]
-    flags_valid = []
-    for flag_name, bits in product_info['flag_info'].items():
-        bits_non_neg = all([b >=0 for b in bits])
-        bits_values_are_ints = all([isinstance(b,int) for b in bits])
-        flags_valid.append(bits_non_neg and bits_values_are_ints)
-    assert all(flags_valid)
-
-@pytest.mark.parametrize('product', all_product_identifiers)
-def test_flag_info_flag_is_str(product):
-    """The key values within 'flag_info' should be strings"""
-    product_info = all_products[product]
-    flags_valid = []
-    for flag_name, bits in product_info['flag_info'].items():
-        flags_valid.append(isinstance(flag_name,str))
-    assert all(flags_valid)
-
-"""
-Various tests for bit values
-"""
-
-@pytest.mark.parametrize('product', all_product_identifiers)
-def test_bits_are_only_used_once(product):
-    """Bits should not be listed twice"""
-    product_info = all_products[product]
-    all_listed_bits = []
-    for flag_name, bits in product_info['flag_info'].items():
-        all_listed_bits.extend(bits)
-        
-    assert len(set(all_listed_bits)) == len(all_listed_bits)
+    failed_tests = []
+    tests_failed = False
+    for test_message, test_function in test_list:
+        try:
+            test_function(product_info)
+        except InvalidProductSpec:
+            tests_failed = True
+            failed_tests.append(test_message)
     
-@pytest.mark.parametrize('product', all_product_identifiers)
-def test_bits_match_max_value(product):
-    """The largest bit should be < the max integer value"""
-    product_info = all_products[product]
-    all_listed_bits = []
-    for flag_name, bits in product_info['flag_info'].items():
-        all_listed_bits.extend(bits)
-        
-    assert 2**max(all_listed_bits) < product_info['max_value']
+    if tests_failed:
+        error_message = '{} failed tests for {}\n'.format(len(failed_tests), product)
+        error_message = error_message + '\n'.join(['{}. {}'.format(i+1,m) for i,m in enumerate(failed_tests)])
+        assert False, error_message
 
-@pytest.mark.parametrize('product', all_product_identifiers)
-def test_bits_are_ordered(product):
-    """Bits should be listed smallest to largest"""
-    product_info = all_products[product]
-    all_listed_bits = []
-    for flag_name, bits in product_info['flag_info'].items():
-        all_listed_bits.extend(bits)
-        
-    assert all_listed_bits == sorted(all_listed_bits)
