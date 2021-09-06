@@ -14,6 +14,9 @@ You need the following to build the docs.
 ### Making updates to the product descriptions.
 These edits should made to the yaml files in `unpackqa/product_files/` in the `description` entry. If you make an edit, run `render_product_markdown_files.py` to produce new markdown files in the `docs` folder, which will be picked up by mkdocs.
 
+### Making edits to API page
+The API page is pulled from the docstrings within each respective function via the mkdocstrings plugin. `docs/api.md` configures how those docstrings are read and displayed. 
+
 ### Making edits to any other docs
 You can edit everything else in `docs` directly.
 
