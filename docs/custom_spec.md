@@ -56,7 +56,7 @@ mask_dict
 ```
 
 ## Notes  
-- the `flag_info` entry should be orderd from lowest to highest bit.
+- the `flag_info` entries should be orderd from lowest to highest bit.
 - Flag descriptions should be short, not start with numbers, and not contain spaces or any special characters (underscores are ok). 
 While unpackqa will not object to any of those, it is easy for the descriptions to end up as column names in data.frames where they 
 can be difficult to work with if spaces, leading numbers, etc. are included. 
@@ -69,4 +69,4 @@ product_info = {'flag_info':{'flag1_description':[],
                 'max_value' : 255,
                 'num_bits'  : 8}
 ```
-
+- Invalid custom specification will raise the error `unpackqa.InvalidProductSpec`

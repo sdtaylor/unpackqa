@@ -1,7 +1,9 @@
 
 
 class InvalidProductSpec(ValueError):
-    """Something is incorrect with the bit flag specification"""
+    """
+    Error class for when an invalid custom specification is passed to the `product` argument.
+    """
 
 # Tests to validate custom product flag specifications. These specs can be declared
 # via a dictionary in the unpack_to_* functions.

@@ -22,3 +22,13 @@
       show_root_heading: false
       show_root_toc_entry: false
       show_source: false
+
+::: unpackqa.tools.validation
+    selection:
+        members:
+            - InvalidProductSpec
+        docstring_style: numpy
+    rendering:
+      show_root_heading: false
+      show_root_toc_entry: false
+      show_source: false
