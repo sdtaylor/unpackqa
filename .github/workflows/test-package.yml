@@ -17,6 +17,8 @@ jobs:
     strategy:
       matrix:
         python-version: [3.6, 3.7, 3.8, 3.9]
+        # testing multiple numpy versions since it's core to unpackqa
+        numpy: ['1.17.0','1.18.0','1.19.0','1.20.0','1.21.0']
 
     steps:
     - uses: actions/checkout@v2
@@ -25,8 +27,13 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
+      env:
+        NUMPY: ${{ matrix.numpy }}
       run: |
-        pip install numpy pyyaml
+        # The ~= operator will choose the latest PATCH release within MAJOR.MINOR version specified
+        # See https://stackoverflow.com/a/50080281/6615512 
+        # and https://www.python.org/dev/peps/pep-0440/#compatible-release
+        pip install numpy~=$NUMPY pyyaml
         pip install -e .
         pip install codecov -U
         pip install pytest-cov -U
