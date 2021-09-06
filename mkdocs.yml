@@ -5,6 +5,7 @@ theme: "material"
 nav:
     - About: 'index.md'
     - Quickstart: 'quickstart.md'
+    - QA/QC Bitpacking: 'bitpacking.md'
     - Examples: 'examples.md'
     - Products':
         - 'Landsat': 'Landsat.md'
