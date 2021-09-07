@@ -57,7 +57,7 @@ def unpackbits(qa_array, num_bits):
 
 """
 This bit unpacking uses string formating to do the job. Not as fast as the
-numpy method in unpackbits.py, but is easier to understand and is used for sanity
+numpy method in unpackbits, but is easier to understand and is used for sanity
 check testing. 
 """
 
@@ -78,3 +78,55 @@ def int16_to_bits(x):
     """
     assert isinstance(x, int), 'x should be integer'
     return [int(b) for b in f'{x:016b}'.format(x)[::-1]]
+
+
+def packbits(bit_array, num_bits):
+    """
+    Pack bit arrays into numeric arrays. This reverses unpackbits.
+
+    Parameters
+    ----------
+    bit_array : np.array
+        A integer array where the 0 axis is the bit axis.
+    num_bits : int
+        Integer size to use, either 8, 16, or 32. This should be
+        the smallest size to accomidate the number of flag bits used.
+        eg. if you are using flags to bit 10, num_bits should be 16.
+
+    Returns
+    -------
+    An integer array with dtype matching num_bits. Shape will match 
+    bit_array minus the 0 axis, ie. bit_array.shape[1:]
+
+    """
+    #TODO: a lot of processing time is from these initial checks. They 
+    # could be removed or done more efficiently if speed ups are needed. 
+    if num_bits not in [8,16,32]:
+        raise TypeError('num_bits should be 8, 16, or 32')
+    if bit_array.shape[0] > num_bits:
+        raise TypeError('bit_array not large enought for num_bits')
+    
+    if not np.issubdtype(bit_array.dtype, np.integer):
+        raise TypeErorr('bit_array not an integer dtype')
+    if bit_array.max() > 1:
+        raise TypeError('values >1 in bit_array')
+    if bit_array.min() < 0:
+        raise TypeError('values <0 in bit_array')
+    
+    if num_bits == 8:
+        dtype = np.uint8
+    elif num_bits == 16:
+        dtype = np.uint16
+    elif num_bits == 32:
+        dtype = np.uint32
+    
+    # need bit_array dtype as the correct number of bits to compare with
+    bit_array = bit_array.astype(dtype)
+    
+    numeric_from_bits = np.zeros(bit_array.shape[1:], dtype=dtype)
+    
+    for bit in range(num_bits):
+        bit_loc = bit_array[bit] << bit
+        numeric_from_bits = np.bitwise_or(numeric_from_bits, bit_loc)
+    
+    return numeric_from_bits
