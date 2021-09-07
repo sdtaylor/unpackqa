@@ -19,31 +19,23 @@ def test_compare_unpack_methods():
 
     assert (method1 == method2).all()
 
-def test_unpackbits_shape_retention():
+@pytest.mark.parametrize('num_bits', [8,16,32])
+def test_unpackbits_shape_retention(num_bits):
     """
     Core unpacking function should take an arbitrary shape and return the
-    same with 1 new axis of length num_bits.
+    same with 1 new axis of length num_bits at axis position 0.
     """
-    arr1 = np.random.randint(low=0, high=2048, size=64)
-    arr2 = np.random.randint(low=0, high=2048, size=64**2).reshape((64,64))
-    arr3 = np.random.randint(low=0, high=2048, size=64**3).reshape((64,64,64))
-    arr4 = np.random.randint(low=0, high=2048, size=64*21*42).reshape((64,21,42))
+    high_range = (2**num_bits)-1
+    arr1 = np.random.randint(low=0, high=high_range, size=64)
+    arr2 = np.random.randint(low=0, high=high_range, size=64**2).reshape((64,64))
+    arr3 = np.random.randint(low=0, high=high_range, size=64**3).reshape((64,64,64))
+    arr4 = np.random.randint(low=0, high=high_range, size=64*21*42).reshape((64,21,42))
     
     test_result = [
-        unpackbits(arr1, num_bits=8).shape == (8,64),
-        unpackbits(arr2, num_bits=8).shape == (8,64,64),
-        unpackbits(arr3, num_bits=8).shape == (8,64,64,64),
-        unpackbits(arr4, num_bits=8).shape == (8,64,21,42),
-        
-        unpackbits(arr1, num_bits=16).shape == (16,64),
-        unpackbits(arr2, num_bits=16).shape == (16,64,64),
-        unpackbits(arr3, num_bits=16).shape == (16,64,64,64),
-        unpackbits(arr4, num_bits=16).shape == (16,64,21,42),
-        
-        unpackbits(arr1, num_bits=32).shape == (32,64),
-        unpackbits(arr2, num_bits=32).shape == (32,64,64),
-        unpackbits(arr3, num_bits=32).shape == (32,64,64,64),
-        unpackbits(arr4, num_bits=32).shape == (32,64,21,42)
+        unpackbits(arr1, num_bits=num_bits).shape == (num_bits,64),
+        unpackbits(arr2, num_bits=num_bits).shape == (num_bits,64,64),
+        unpackbits(arr3, num_bits=num_bits).shape == (num_bits,64,64,64),
+        unpackbits(arr4, num_bits=num_bits).shape == (num_bits,64,21,42),
         ]
     
     assert all(test_result)
