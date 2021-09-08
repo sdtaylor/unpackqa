@@ -3,7 +3,7 @@ import numpy as np
 
 from .tools.unpackbits import unpackbits
 
-class UnpackQABase():
+class UnpackQABase:
     """
     Generalized bit unpacking methods. 
     """
