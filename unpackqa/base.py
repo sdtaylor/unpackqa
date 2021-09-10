@@ -1,7 +1,7 @@
 from collections import OrderedDict
 import numpy as np
 
-from .tools.unpackbits import unpackbits
+from .tools.unpackbits import unpackbits, packbits
 
 class UnpackQABase:
     """
@@ -186,3 +186,127 @@ class UnpackQABase:
         flags = self._parse_flag_args(flags)
         flag_array = self._unpack_array_core(qa = qa, flags = flags)
         return {flag:flag_array[flag_i] for flag_i, flag in enumerate(flags)}
+
+
+class PackQABase:
+    """
+    Generalized bit packing methods. 
+    """
+    def __init__(self, product_info, validate):
+        self.flag_info = product_info['flag_info']
+        self.num_bits = product_info['num_bits']
+        self.max_value = product_info['max_value']
+        self.validate  = validate
+
+    def _parse_flag_args(self, passed_flags):
+        if passed_flags == 'all':
+            passed_flags = self._available_qa_flags()
+        elif isinstance(passed_flags, list) and len(passed_flags) > 0:
+            valid_flags = self._available_qa_flags()
+            if not all([f in valid_flags for f in passed_flags]):
+                raise ValueError('Invalid flag name passed')
+        else:
+            error_message = "flags should be a list of strings or 'all'"
+            raise ValueError(error_message)
+        
+        return passed_flags
+    
+    def _validate_flag_array(self, flag_array):
+        pass
+        # max values should not exceed max potential values in product desc.
+        # ie 2**(flag with most best)
+        #
+        # should not be < 0
+        # flag axis should == num_flags
+    def _available_qa_flags(self):
+        """
+        A list of available QA flags for this product. 
+
+        Returns
+        -------
+        list
+            List of strings
+
+        """
+        return list(self.flag_info.keys())    
+    
+    def _pack_array_core(self, flag_array, flags):
+        """
+        
+
+        Parameters
+        ----------
+        flag_array : TYPE
+            DESCRIPTION.
+        flags : TYPE
+            DESCRIPTION.
+
+        Returns
+        -------
+        None.
+
+        """
+        if self.validate:
+            self._validate_flag_array(flag_array)
+        #---
+        # First convert the flag values, which are usually 0-1 but can also
+        # be 0-3 (2 bits) or even 0-15 (4 bits), to the bit (0/1) values.
+        # These are ordered by the bit location defined in the product_spec
+        #---
+        # bit_array shape is the same, but axis 0 is now the bit array with
+        # length num_bits 
+        # eg. (12,1024,1024) is a 1024x1024 array with 12 flags. 16 bits are needed
+        # to store that many, so it ends up as (16,1024,1024)
+        bit_shape = (self.num_bits,) + flag_array.shape[1:]
+        bit_array = np.empty(bit_shape, dtype=np.uint8)
+        
+        for flag_i, flag_name in enumerate(flags):
+            flag_bit_locs = self.flag_info[flag_name]
+            if len(flag_bit_locs) == 1:
+                bit_array[flag_bit_locs[0]] = flag_array[flag_i]
+            else:
+                # > 1 bit flag means the flag values need conversion back
+                # to 0/1. eg. [1,2,3] -> [[0,1],[1,0],[1,1]]
+                bit_array[flag_bit_locs] = unpackbits(
+                    flag_array[flag_i], 
+                    num_bits = len(flag_bit_locs)
+                    )
+                
+        return packbits(bit_array, num_bits=self.num_bits)
+
+    def _pack_from_dict(self, flag_values, flags='all'):
+        """
+        Get a qa array from flags in a dictionary
+
+        Parameters
+        ----------
+        flag_values : np.array or int
+            A dictionary where the flag names are keys and values are np.arrays
+            of the flag mask with shape qa.shape. All entries will have the
+            same shape.
+        flags : list of strings or 'all', optional
+            List of flags to return. If 'all', the default, then all available
+            flags are returned in the array. See available flags for each 
+            product with `list_qa_flags()`.
+
+        Returns
+        -------
+        np.array
+            An array of qa values derived from bit packing individual flags.
+            Shape is the same as the arrays in flag_values.
+
+        """
+        flags = self._parse_flag_args(flags)
+        flags_present = [f in flag_values for f in flags]
+        if not all(flags_present):
+            raise ValueError('flag entries missing from flag_values dict')
+        
+        # stack the dictionary into a single array. ordered by product spec
+        n_flags = len(flags)
+        flag_value_shape = (n_flags,) + flag_values[flags[0]].shape
+        flag_value_dtype = flag_values[flags[0]].dtype
+        flag_array = np.empty(flag_value_shape, dtype=flag_value_dtype)
+        for flag_i, flag_name in enumerate(flags):
+            flag_array[flag_i] = flag_values[flag_name]       
+        
+        return self._pack_array_core(flag_array = flag_array, flags = flags)
