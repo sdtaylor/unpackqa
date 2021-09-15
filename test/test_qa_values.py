@@ -2,10 +2,14 @@ import pytest
 import numpy as np
 
 from unpackqa import (unpack_to_array,
-                        unpack_to_dict, 
-                        list_products,
-                        list_qa_flags
-                        )
+                      unpack_to_dict,
+                      pack_from_array,
+                      pack_from_dict,
+                      list_products,
+                      list_qa_flags
+                      )
+
+from unpackqa.product_loader import all_products
 
 # Given a list of actual QA values, ensure the flags are as expected.
 # These values and resulting flags are 
@@ -69,3 +73,12 @@ def test_confirm_wrong_flag_values(product, test_qa_value, expected_output):
     first_key = list(output.keys())[0]
     output[first_key] += 1
     assert output != expected_output
+
+@pytest.mark.parametrize('product, test_qa_value, expected_output', qa_test_cases)
+def test_confirm_repacked_qa_values(product, test_qa_value, expected_output):
+    """unpack -> pack should have the same result"""
+    unpacked_array = unpack_to_array(test_qa_value, product=product, flags='all')
+    # pack_to_ functions do not currently take a preconfigured product.
+    product_spec = all_products[product]
+    repacked_qa = pack_from_array(unpacked_array, product=product_spec, flags='all')
+    assert (test_qa_value == repacked_qa).all()
