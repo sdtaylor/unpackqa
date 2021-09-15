@@ -1,59 +1,115 @@
-import numpy as np
 import pytest
+import numpy as np
 
-from unpackqa.tools.unpackbits import unpackbits, int16_to_bits, packbits
+from unpackqa import (unpack_to_array,
+                        unpack_to_dict, 
+                        list_products,
+                        list_qa_flags
+                        )
 
 
-def test_compare_unpack_methods():
+"""
+Just iterating thru all products as integration tests.
+"""
+
+qa_array = np.array([[8,8,8],
+                     [16,16,16],
+                     [255,255,255]])
+
+all_product_identifiers = list_products(sensor='all')
+
+@pytest.mark.parametrize('product', all_product_identifiers)
+def test_unpack_array_shape(product):
+    """ 
+    With >1 flag unpack_to_array result should match the input shape and have
+    a new axis at position (-1) with the same length as number of flags.
     """
-    Core unpacking function should have the exact results as a slower 
-    string based method
-    """
-    arr = np.arange(2046)
+    n_flags = len(list_qa_flags(product = product))
+    target_shape = qa_array.shape + (n_flags,)
     
-    method1 = np.array([int16_to_bits(int(x)) for x in arr], dtype=np.uint8)
-    method2 = unpackbits(arr, num_bits=16)
-    
-    # bit axis at the end to match method1
-    method2 = np.moveaxis(method2, source = 0, destination = -1)
+    result = unpack_to_array(qa_array, product = product)
+    assert result.shape == target_shape
 
-    assert (method1 == method2).all()
-
-@pytest.mark.parametrize('num_bits', [8,16,32])
-def test_unpackbits_shape_retention(num_bits):
+@pytest.mark.parametrize('product', all_product_identifiers)
+def test_single_flag_array_shape(product):
     """
-    Core unpacking function should take an arbitrary shape and return the
-    same with 1 new axis of length num_bits at axis position 0.
+    A single flag should return an array the same shape as the input and
+    *not* have an added axis.
     """
-    high_range = (2**num_bits)-1
-    arr1 = np.random.randint(low=0, high=high_range, size=64)
-    arr2 = np.random.randint(low=0, high=high_range, size=64**2).reshape((64,64))
-    arr3 = np.random.randint(low=0, high=high_range, size=64**3).reshape((64,64,64))
-    arr4 = np.random.randint(low=0, high=high_range, size=64*21*42).reshape((64,21,42))
+    flags = list_qa_flags(product = product)
+    flags = [flags[0]]
+    result = unpack_to_array(qa_array, product = product, flags=flags)
     
-    test_result = [
-        unpackbits(arr1, num_bits=num_bits).shape == (num_bits,64),
-        unpackbits(arr2, num_bits=num_bits).shape == (num_bits,64,64),
-        unpackbits(arr3, num_bits=num_bits).shape == (num_bits,64,64,64),
-        unpackbits(arr4, num_bits=num_bits).shape == (num_bits,64,21,42),
-        ]
-    
-    assert all(test_result)
+    assert result.shape == qa_array.shape
 
-@pytest.mark.parametrize('num_bits', [8,16,32])
-def test_unpack_to_pack(num_bits):
-    """packbits should reverse unpackbits"""
-    high_range = (2**num_bits)-1
-    arr1 = np.random.randint(low=0, high=high_range, size=64)
-    arr2 = np.random.randint(low=0, high=high_range, size=64**2).reshape((64,64))
-    arr3 = np.random.randint(low=0, high=high_range, size=64**3).reshape((64,64,64))
-    arr4 = np.random.randint(low=0, high=high_range, size=64*21*42).reshape((64,21,42))
+@pytest.mark.parametrize('product', all_product_identifiers)
+def test_unpack_dict_shape(product):
+    """Each dictionary value in unpack_to_dick should match the input qa shape"""
+    flags = list_qa_flags(product = product)
+    target_shape = qa_array.shape
     
-    test_results = [
-        (arr1 == packbits(unpackbits(arr1, num_bits=num_bits), num_bits=num_bits)).all(),
-        (arr2 == packbits(unpackbits(arr2, num_bits=num_bits), num_bits=num_bits)).all(),
-        (arr3 == packbits(unpackbits(arr3, num_bits=num_bits), num_bits=num_bits)).all(),
-        (arr4 == packbits(unpackbits(arr4, num_bits=num_bits), num_bits=num_bits)).all(),
-        ]
+    result = unpack_to_dict(qa_array, product = product, flags='all')
     
-    assert all(test_results)
+    all_shapes_good = [result[flag].shape == target_shape for flag in flags]
+    assert all(all_shapes_good)
+
+@pytest.mark.parametrize('product', all_product_identifiers)
+def test_unpack_dict_all_flags(product):
+    """ The all flag indicator returns all available flags"""
+    flags = list_qa_flags(product = product)
+    
+    result = unpack_to_dict(qa_array, product = product, flags='all')
+    all_flags_in_result = [f in result for f in flags]
+    all_results_in_flags = [f in flags for f in result.keys()]
+    assert all(all_flags_in_result) and all(all_results_in_flags)
+    
+@pytest.mark.parametrize('product', all_product_identifiers)
+def test_unpack_dict_2_flags1(product):
+    """ Get the first and last flag only. """
+    flags = list_qa_flags(product = product)
+    flags = [flags[0], flags[-1]]
+    
+    result = unpack_to_dict(qa_array, product = product, flags=flags)
+    all_flags_in_result = [f in result for f in flags]
+    all_results_in_flags = [f in flags for f in result.keys()]
+    assert all(all_flags_in_result) and all(all_results_in_flags)
+
+@pytest.mark.parametrize('product', all_product_identifiers)
+def test_unpack_dict_2_flags2(product):
+    """ Get the first flag only. """
+    flags = list_qa_flags(product = product)
+    flags = [flags[0]]
+    
+    result = unpack_to_dict(qa_array, product = product, flags=flags)
+    all_flags_in_result = [f in result for f in flags]
+    all_results_in_flags = [f in flags for f in result.keys()]
+    assert all(all_flags_in_result) and all(all_results_in_flags)
+
+@pytest.mark.parametrize('product', all_product_identifiers)
+def test_flag_wrong_axis_ordering(product):
+    """
+    Ordering of the flag axis is the same as the flag list. 
+    When the flag list is reversed, the resulting arrays should not match.
+    """
+    flags = list_qa_flags(product = product)
+    
+    mask1 = unpack_to_array(qa_array, product=product, flags=flags)
+    flags.reverse()
+    mask2 = unpack_to_array(qa_array, product=product, flags=flags)
+    
+    assert not (mask1 == mask2).all()
+
+@pytest.mark.parametrize('product', all_product_identifiers)
+def test_flag_correct_axis_ordering(product):
+    """
+    Ordering of the flag axis is the same as the flag list. 
+    When the flag list is reversed, the resulting arrays should not match.
+    But should match when the axis is flipped back again.
+    """
+    flags = list_qa_flags(product = product)
+    
+    mask1 = unpack_to_array(qa_array, product=product, flags=flags)
+    flags.reverse()
+    mask2 = unpack_to_array(qa_array, product=product, flags=flags)
+    
+    assert (mask1 == np.flip(mask2, axis=-1)).all()
