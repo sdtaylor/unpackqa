@@ -212,12 +212,28 @@ class PackQABase:
         return passed_flags
     
     def _validate_flag_array(self, flag_array):
-        pass
-        # max values should not exceed max potential values in product desc.
-        # ie 2**(flag with most best)
-        #
-        # should not be < 0
-        # flag axis should == num_flags
+        n_flags = len(self.flag_info)
+        if flag_array.shape[0] != n_flags:
+            msg = 'flag_array axis length ({}) must match number of flags ({})'
+            raise ValueError(error_message.forma(flag_array.shape[0], n_flags))
+            
+        if flag_array.min() < 0:
+            m = flag_array.min()
+            msg = 'flag_array values smaller than the specified range for this product. ' + \
+                  'min value was {} and the valid range is 0-{}'
+            raise ValueError(error_message.format(m, self.max_value))
+            
+        for flag_i, (flag_name, flag_bit_locs) in enumerate(self.flag_info.items()):
+            max_value = (2**len(bit_locs)) - 1
+            if flag_array[flag_i].max() > max_value:
+                m = flag_array[flag_i].max()
+                n_bits = len(bit_locs)
+                msg = 'axis for "{}" has values larger than larger than specified ' + \
+                      'bit allows. max_value: {} for {} bits.'
+                raise ValueError(msg.format(flag_name, m, n_bits))
+                
+        #TODO: if some bits are not specified in product, ensure they equal 0
+
     def _available_qa_flags(self):
         """
         A list of available QA flags for this product. 
@@ -274,15 +290,45 @@ class PackQABase:
                 
         return packbits(bit_array, num_bits=self.num_bits)
 
+    def _pack_from_array(self, flag_values, flag_axis, flags='all'):
+        """
+        Get a qa array from a flag array.
+        
+        Parameters
+        ----------
+        flag_values : np.array
+            numpy array of flag values.
+        flags : TYPE, optional
+            
+            DESCRIPTION. The default is 'all'.
+        flag_axis: int
+            The location of the flag axis in flag_values.
+
+        Returns
+        -------
+         np.array
+            An array of qa values derived from bit packing individual flags.
+            Shape is the same as the arrays in flag_values..
+
+        """
+        if flag_axis != 0:
+            flag_values = np.moveaxis(
+                flag_value_dtype, 
+                source=flag_axis,
+                destination=0)
+            
+        flags = self._parse_flag_args(flags)
+        return self._pack_array_core(flag_array = flag_array, flags = flags)
+
     def _pack_from_dict(self, flag_values, flags='all'):
         """
         Get a qa array from flags in a dictionary
 
         Parameters
         ----------
-        flag_values : np.array or int
+        flag_values : dict
             A dictionary where the flag names are keys and values are np.arrays
-            of the flag mask with shape qa.shape. All entries will have the
+            of the flag mask with shape qa.shape. All entries must have the
             same shape.
         flags : list of strings or 'all', optional
             List of flags to return. If 'all', the default, then all available
@@ -305,7 +351,9 @@ class PackQABase:
         n_flags = len(flags)
         flag_value_shape = (n_flags,) + flag_values[flags[0]].shape
         flag_value_dtype = flag_values[flags[0]].dtype
-        flag_array = np.empty(flag_value_shape, dtype=flag_value_dtype)
+        
+        flag_array = np.zeros(flag_value_shape, dtype=flag_value_dtype)
+        
         for flag_i, flag_name in enumerate(flags):
             flag_array[flag_i] = flag_values[flag_name]       
         
