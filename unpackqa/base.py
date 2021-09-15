@@ -224,10 +224,10 @@ class PackQABase:
             raise ValueError(error_message.format(m, self.max_value))
             
         for flag_i, (flag_name, flag_bit_locs) in enumerate(self.flag_info.items()):
-            max_value = (2**len(bit_locs)) - 1
+            max_value = (2**len(flag_bit_locs)) - 1
             if flag_array[flag_i].max() > max_value:
                 m = flag_array[flag_i].max()
-                n_bits = len(bit_locs)
+                n_bits = len(flag_bit_locs)
                 msg = 'axis for "{}" has values larger than larger than specified ' + \
                       'bit allows. max_value: {} for {} bits.'
                 raise ValueError(msg.format(flag_name, m, n_bits))
@@ -274,7 +274,7 @@ class PackQABase:
         # eg. (12,1024,1024) is a 1024x1024 array with 12 flags. 16 bits are needed
         # to store that many, so it ends up as (16,1024,1024)
         bit_shape = (self.num_bits,) + flag_array.shape[1:]
-        bit_array = np.empty(bit_shape, dtype=np.uint8)
+        bit_array = np.zeros(bit_shape, dtype=np.uint8)
         
         for flag_i, flag_name in enumerate(flags):
             flag_bit_locs = self.flag_info[flag_name]
@@ -313,12 +313,12 @@ class PackQABase:
         """
         if flag_axis != 0:
             flag_values = np.moveaxis(
-                flag_value_dtype, 
+                flag_values, 
                 source=flag_axis,
                 destination=0)
             
         flags = self._parse_flag_args(flags)
-        return self._pack_array_core(flag_array = flag_array, flags = flags)
+        return self._pack_array_core(flag_array = flag_values, flags = flags)
 
     def _pack_from_dict(self, flag_values, flags='all'):
         """
