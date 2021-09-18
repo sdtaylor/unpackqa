@@ -30,8 +30,13 @@ def test_array():
         unpack_to_dict(qa)
 
 def test_single_value_int():
-    """A singel value is fine as long as it's an int"""
+    """A single value is fine as long as it's an int"""
     result = unpack_to_array(1, product = default_product)
+    assert result is not None
+    
+def test_single_value_np_int():
+    """A single value of a np style int should work fine"""
+    result = unpack_to_array(np.uint16(1), product = default_product)
     assert result is not None
     
 def test_single_value_float():
@@ -39,6 +44,11 @@ def test_single_value_float():
     with pytest.raises(TypeError):
         unpack_to_array(1.1, product = default_product)
 
+def test_single_value_np_float():
+    """No floats please"""
+    with pytest.raises(TypeError):
+        unpack_to_array(np.float32(1.1), product = default_product)
+        
 def test_invalid_flag1():
     """Invalid flag names should raise an error"""
     qa = np.array([64,128], dtype=np.int16)

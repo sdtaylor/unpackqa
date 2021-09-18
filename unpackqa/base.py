@@ -109,6 +109,10 @@ class UnpackQABase:
         # other checks though.
         if isinstance(qa, int):
             qa = np.array([qa], dtype=np.int32)
+        # also possible to have np style single value integers.
+        # note this check does not equal true with integer arrays.
+        elif isinstance(qa, np.integer):
+            qa = np.array([qa], dtype=qa.dtype)
         
         self._validate_arr(qa)
         
