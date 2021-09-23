@@ -1,11 +1,21 @@
 <!-- this markdown file automatically generated. do not edit directly-->
 
-## MODIS/Terra Vegetation Indices 16-Day L3 Global 250m
+## MODIS Vegetation Indices (MOD13) Collection 6
 
-**Product Identifer**: `MOD13Q1v006_DetailedQA`
+**Product Identifer**: `MOD13_V6_DetailedQA`
 
 ### Details  
-The MODIS Vegatation indice QA band  
+The MODIS Vegatation indice (VI) QA band. This specification is valid for most of the MOD13 products, with the exception of MOD13C1 and MOD13C2.  
+  
+MOD13 Collection 6.1 is identical to Collection 6.0.  
+  
+While the flag specifications are the same for the following 4 products, the details are slightly different for each within the `VI_Usefulness` flag. See the product guide for details.  
+  
+- MOD13Q1 - 16-day 250m VI  
+- MOD13A1 - 16-day 500m VI  
+- MOD13A2 - 16-day 1km VI  
+- MOD13A3 - Monthly 1km VI  
+  
   
 ### Flag Descriptions  
   
@@ -24,10 +34,62 @@ The MODIS Vegatation indice QA band
   
 ### References docs   
 MODIS Vegetation Index User’s Guide (MOD13 Series) Version 3.00, June 2015 (Collection 6)    
-https://lpdaac.usgs.gov/products/mod13q1v006/    
+MODIS Vegetation Index User’s Guide (MOD13 Series) Version 3.10, Sept 2019 (Collection 6.1)    
   
 ### Confirmed products  
+- [https://lpdaac.usgs.gov/products/mod13q1v006/](https://lpdaac.usgs.gov/products/mod13q1v006/)  
+- [https://lpdaac.usgs.gov/products/mod13q1v061/](https://lpdaac.usgs.gov/products/mod13q1v061/)  
+  
+- [https://lpdaac.usgs.gov/products/mod13a1v006/](https://lpdaac.usgs.gov/products/mod13a1v006/)  
+- [https://lpdaac.usgs.gov/products/mod13a1v061/](https://lpdaac.usgs.gov/products/mod13a1v061/)  
+  
+- [https://lpdaac.usgs.gov/products/mod13a2v006/](https://lpdaac.usgs.gov/products/mod13a2v006/)  
+- [https://lpdaac.usgs.gov/products/mod13a2v061/](https://lpdaac.usgs.gov/products/mod13a2v061/)  
+  
+- [https://lpdaac.usgs.gov/products/mod13a3v006/](https://lpdaac.usgs.gov/products/mod13a3v006/)  
+- [https://lpdaac.usgs.gov/products/mod13a3v061/](https://lpdaac.usgs.gov/products/mod13a3v061/)  
+  
 - Google Earth Engine: MODIS/006/MOD13Q1    
+- Google Earth Engine: MODIS/006/MOD13A1    
+- Google Earth Engine: MODIS/006/MOD13A2    
+
+## MODIS Vegetation Indices CMG (MOD13) Collection 6
+
+**Product Identifer**: `MOD13C_V6_DetailedQA`
+
+### Details  
+The MODIS Vegatation indice (VI) QA band for the CMG (climate modeling grid) products.  
+  
+This specification is identical to the other MOD13 products except that a `Geospatial_quality` flag is added, and the `Possible_snow_ice` and `Possible_shadow` flags removed.  
+  
+MOD13 Collection 6.1 is identical to Collection 6.0.  
+          
+- MOD13C1 - 16-day 0.05-deg VI  
+- MOD13C2 - monthly 0.05-deg VI  
+  
+### Flag Descriptions  
+  
+| Bits  | Flag Name                  | Descriptions                                                                                                                                                                                                                                                                                                          |  
+|-------|----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|  
+| 0-1   | VI_Quality     | 0 - VI produced with good quality  <br/>1 - VI produced, but check other QA  <br/>2 - Pixel produced, but most probably cloudy  <br/>3 - Pixel not produced due to other reasons than clouds                                                                                                                                      |  
+| 2-5   | VI_Usefulness  | 0 - Highest quality <br/>1 - Lower quality  <br/>2 - Decreasing quality  <br/>3 - Decreasing quality  <br/>4 - Decreasing quality  <br/>5 - Decreasing quality  <br/>6 - Decreasing quality  <br/>7 - Lowest quality  <br/>8 - Quality so low that it is not useful  <br/>9 - L1B data faulty  <br/>10 - Not useful for any other reason/not processed   |  
+| 6-7   | Aerosol_Quantity           | 0 - Climatology <br/>1 - Low <br/>2 - Intermediate <br/>3 - High                                                                                                                                                                                                                                                      |  
+| 8     | Adjacent_cloud_detected    | 0 - No <br/>1 - Yes                                                                                                                                                                                                                                                                                                   |  
+| 9     | Atmosphere_BRDF_Correction | 0 - No <br/>1 - Yes                                                                                                                                                                                                                                                                                                   |  
+| 10    | Mixed_Clouds               | 0 - No <br/>1 - Yes                                                                                                                                                                                                                                                                                                   |  
+| 11-13 | Land_Water_Mask            | 0 - Shallow ocean <br/>1 - Land (Nothing else but land) <br/>2 - Ocean coastlines and lake shorelines <br/>3 - Shallow inland water <br/>4 - Ephemeral water <br/>5 - Deep inland water <br/>6 - Moderate or continental ocean <br/>7 - Deep ocean                                                                    |  
+| 14-15 | Geospatial_quality         |  0 - ≤ 25% of the finer 1-km resolution contributed to this CMG pixel<br>1 - > 25% and ≤ 50% of the finer 1-km resolution contributed to this CMG pixel<br>2 - > 50% and ≤ 75% of the finer 1-km resolution contributed to this CMG pixel<br>3 - > 75% of the finer 1-km resolution contributed to this CMG pixel     |  
+  
+### References docs   
+MODIS Vegetation Index User’s Guide (MOD13 Series) Version 3.00, June 2015 (Collection 6)    
+MODIS Vegetation Index User’s Guide (MOD13 Series) Version 3.10, Sept 2019 (Collection 6.1)    
+  
+### Confirmed products  
+- [https://lpdaac.usgs.gov/products/mod13c1v006/](https://lpdaac.usgs.gov/products/mod13c1v006/)  
+- [https://lpdaac.usgs.gov/products/mod13c1v061/](https://lpdaac.usgs.gov/products/mod13c1v061/)  
+  
+- [https://lpdaac.usgs.gov/products/mod13c2v006/](https://lpdaac.usgs.gov/products/mod13c2v006/)  
+- [https://lpdaac.usgs.gov/products/mod13c2v061/](https://lpdaac.usgs.gov/products/mod13c2v061/)  
 
 ## MODIS Collection 6 LAI/FPAR Products FparLAI_QC
 
