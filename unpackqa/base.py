@@ -248,18 +248,25 @@ class PackQABase:
     
     def _pack_array_core(self, flag_array, flags):
         """
+        Core function for bit packing.
         
+        Primary role here is converting flag values (which are generally 0-1, but can also be 0-16),
+        into the binary equivilant and in the correct bit location.
 
         Parameters
         ----------
-        flag_array : TYPE
-            DESCRIPTION.
+        flag_array : np.array
+            An array where the axis at location 0 is the flag axis, and has the same
+            length as `flags`.
         flags : TYPE
-            DESCRIPTION.
+            list of flag names represented in flag_array. Should match those in the
+            prodcuct specification.
 
         Returns
         -------
-        None.
+        np.array
+            A numpy array with shape flag_array.shape[1:], and dtype of either
+            8, 16, or 32 bit np.uint matching `num_bits`.
 
         """
         if self.validate:
@@ -298,9 +305,9 @@ class PackQABase:
         ----------
         flag_values : np.array
             numpy array of flag values.
-        flags : TYPE, optional
-            
-            DESCRIPTION. The default is 'all'.
+        flags : list or str
+            List of flags to pack, or `all` (the default) to pack all flags
+            specified in `product`
         flag_axis: int
             The location of the flag axis in flag_values.
 

@@ -8,6 +8,9 @@ def pack_from_array(flag_values, product, flags='all', flag_axis=-1, validate=Tr
     """
     Get a bitpacked QA array from an array of flag values.
     
+    This is currently experimental. Tests for it work, but some use cases would be useful to validate it. 
+    Open an issue on the github page if you have an interesting use case and would like to contribute. 
+    
     `flag_values` should be a np.array where either the first (0) or last (-1) axis
     is the flag values. The resulting array will match the array shape minus 
     the flag axis.
@@ -46,7 +49,7 @@ def pack_from_array(flag_values, product, flags='all', flag_axis=-1, validate=Tr
     flags : list or str
         List of flags to pack, or `all` (the default) to pack all flags
         specified in `product`
-    flag_axis : TYPE, optional
+    flag_axis : int, optional
         The location of the flag axis within the flag_values array. This defaults
         to -1 (the last position), which matches the output of unpack_to_array().
     validate : bool, optional
@@ -70,6 +73,9 @@ def pack_from_array(flag_values, product, flags='all', flag_axis=-1, validate=Tr
 def pack_from_dict(flag_values, product, flags='all', validate=True):
     """
     Get a bitpacked QA array from an array of dictionary values.
+    
+    This is currently experimental. Tests for it work, but some use cases would be useful to validate it. 
+    Open an issue on the github page if you have an interesting use case and would like to contribute. 
 
     flag_values should be a dict where the keys are flag names and match the
     flag names in `product`. The dictionary values should be corresponding
@@ -106,7 +112,8 @@ def pack_from_dict(flag_values, product, flags='all', validate=True):
                         'num_bits'  : 8}
         ```
     flags : list or str
-        DESCRIPTION. The default is 'all'.
+        List of flags to pack, or `all` (the default) to pack all flags
+        specified in `product`
     validate : bool, optional
         Perform checks before bitpacking. Setting to false can speed this
         up slightly.
