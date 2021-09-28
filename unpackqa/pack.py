@@ -15,7 +15,7 @@ def pack_from_array(flag_values, product, flags='all', flag_axis=-1, validate=Tr
     is the flag values. The resulting array will match the array shape minus 
     the flag axis.
     
-    This reverses `unpack_to_array()` in that:
+    This reverses `unpack_to_array()` in that:  
         `qa_values == pack_from_array(unpack_to_array(qa_values))` is True
     
     All flags specified in `product` should have a corresponding location in 
@@ -26,7 +26,7 @@ def pack_from_array(flag_values, product, flags='all', flag_axis=-1, validate=Tr
     flag_values : np.array
         A numpy array of flag values. The flag axis (specifed via `flag_axis`) 
         needs to match the number of flags specified in `product`. 
-        eg. `flag_values.shape[flag_axis] == len(product_info[flag_info])` must
+        eg. `flag_values.shape[flag_axis] == len(product_info['flag_info'])` must
         be true.
         
     product : dict
@@ -58,8 +58,9 @@ def pack_from_array(flag_values, product, flags='all', flag_axis=-1, validate=Tr
 
     Returns
     -------
-    A QA array with the same shape as `flag_values` minus the flag axis, and 
-    with the dtype matching `num_bits` in `product` (either np.uint 8, 16, or 32).
+    np.array
+        A QA array with the same shape as `flag_values` minus the flag axis, and 
+        with the dtype matching `num_bits` in `product` (either np.uint 8, 16, or 32).
 
     """
     if isinstance(product, dict):
@@ -82,7 +83,7 @@ def pack_from_dict(flag_values, product, flags='all', validate=True):
     flag array, and all arrays must have the same shape. The resulting
     bitpacked QA array will have the same  shape.
 
-    This reverses `unpack_to_dict()` in that:
+    This reverses `unpack_to_dict()` in that:  
         `qa_values == pack_from_dict(unpack_to_dict(qa_values))` is True
     
     All flags specified in `product` should have a corresponding location in 
@@ -121,8 +122,9 @@ def pack_from_dict(flag_values, product, flags='all', validate=True):
 
     Returns
     -------
-    A QA array with the same shape as the arrays in `flag_values`, and 
-    with dtype matching `num_bits` in `product` (either np.uint 8, 16, or 32).
+    np.array
+        A QA array with the same shape as the arrays in `flag_values`, and 
+        with dtype matching `num_bits` in `product` (either np.uint 8, 16, or 32).
 
     """
     if isinstance(product, dict):
