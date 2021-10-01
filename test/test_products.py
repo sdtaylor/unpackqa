@@ -4,7 +4,8 @@ import numpy as np
 from unpackqa import (unpack_to_array,
                         unpack_to_dict, 
                         list_products,
-                        list_qa_flags
+                        list_qa_flags,
+                        list_sensors,
                         )
 
 from unpackqa.tools.validation import (product_info_has_required_entries,
@@ -36,6 +37,26 @@ all_product_identifiers = list_products(sensor='all')
 def test_product_ids_are_unique():
     """No duplicate product identifers"""
     assert len(all_product_identifiers) == len(set(all_product_identifiers))
+
+def test_list_sensors():
+    """Should have some output"""
+    assert len(list_sensors()) > 0
+
+def test_list_products():
+    """Each sensor should have some products"""
+    sensors = list_sensors()
+    sensor_has_products = [len(list_products(sensor=s))>0 for s in sensors]
+    assert all(sensor_has_products)
+
+def test_list_products_invalid_sensor():
+    """Should raise error with unknown sensor"""
+    with pytest.raises(ValueError):
+        list_products(sensor='asdf')
+
+def test_list_flags_invalid_product():
+    """Should raise error with unknown product ID"""
+    with pytest.raises(ValueError):
+        list_qa_flags(product = 'asdf')
 
 @pytest.mark.parametrize('product', all_product_identifiers)
 def test_qa_flag_list(product):
