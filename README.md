@@ -1,4 +1,4 @@
-# unpackqa [![test-package](https://github.com/sdtaylor/unpackqa/actions/workflows/test-package.yml/badge.svg)](https://github.com/sdtaylor/unpackqa/actions/workflows/test-package.yml) 
+# unpackqa [![test-package](https://github.com/sdtaylor/unpackqa/actions/workflows/test-package.yml/badge.svg)](https://github.com/sdtaylor/unpackqa/actions/workflows/test-package.yml) [![PyPI](https://img.shields.io/pypi/v/unpackqa)](https://pypi.org/project/unpackqa/)
 A python package for QA/QC bit unpacking and labeling in earth science data products  
 
 - Works with single QA values, 1D arrays (eg. time series), or 2D arrays (eg. full scenes).  
