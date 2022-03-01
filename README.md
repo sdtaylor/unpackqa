@@ -56,5 +56,4 @@ flag_masks['Cloud'].shape
 (2,2)
 flag_masks['Cloud Shadow'].shape
 (2,2)
-
 ```
