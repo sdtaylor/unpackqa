@@ -11,6 +11,17 @@
       show_root_toc_entry: false
       show_source: false
 
+::: unpackqa.pack
+    selection:
+        members:
+            - pack_from_array
+            - pack_from_dict
+        docstring_style: numpy
+    rendering:
+      show_root_heading: false
+      show_root_toc_entry: false
+      show_source: false
+
 ::: unpackqa.product_loader
     selection:
         members:
