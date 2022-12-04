@@ -1,7 +1,7 @@
 """
 Render the product pages. From the yaml files in product_files/
 
-These are from the 'description' entry of each product
+These are from the 'description' entry of each product 
 
 One file per sensor. Where within each file each product has a ## markdown heading.
 """
