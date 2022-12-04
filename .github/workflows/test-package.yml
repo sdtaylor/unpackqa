@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.7, 3.8, 3.9, 3.10, 3.11]
+        python-version: ['3.7', '3.8', '3.9', '3.10', '3.11']
         # testing multiple numpy versions since it's core to unpackqa
         numpy: ['1.20.0','1.21.0','1.22.0']
     
